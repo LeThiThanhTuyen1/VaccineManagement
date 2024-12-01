@@ -40,6 +40,6 @@ public class SecurityConfig {
     
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-    	return (web)->web.debug(true).ignoring().requestMatchers("/static/**", "/img/**");
+    	return (web)->web.debug(true).ignoring().requestMatchers("/static/**", "/img/**", "/css/**", "/js/**");
     }
 }
