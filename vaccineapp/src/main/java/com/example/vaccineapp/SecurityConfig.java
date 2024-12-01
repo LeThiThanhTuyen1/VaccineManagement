@@ -3,6 +3,7 @@ package com.example.vaccineapp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.core.userdetails.User;
@@ -16,13 +17,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/public/**", "/test", "/test1").permitAll() // Cho phép truy cập không cần đăng nhập
+            .requestMatchers("/public/**").permitAll() // Cho phép truy cập không cần đăng nhập
             .anyRequest().authenticated() // Các yêu cầu khác phải xác thực
         )
         .formLogin(form -> form
             .loginPage("/login") // Trang đăng nhập tùy chỉnh
             .permitAll() // Cho phép tất cả truy cập trang đăng nhập
-        );
+        )
+    	.logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login") 
+            .invalidateHttpSession(true) 
+            .clearAuthentication(true)
+            .deleteCookies("JSESSIONID") 
+    	);
         return http.build();
     }
 
@@ -35,5 +43,10 @@ public class SecurityConfig {
             .roles("USER")
             .build();
         return new InMemoryUserDetailsManager(user);
+    }
+    
+    @Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+    	return (web)->web.debug(true).ignoring().requestMatchers("/static/**", "/img/**", "/css/**", "/js/**");
     }
 }

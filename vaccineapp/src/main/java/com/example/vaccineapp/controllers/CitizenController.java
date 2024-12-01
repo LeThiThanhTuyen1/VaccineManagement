@@ -29,17 +29,4 @@ public class CitizenController {
         return "citizenList"; // Trang hiển thị danh sách công dân
     }
     
-    @GetMapping("/test2")
-    public String citizenTest2(Model model) {
-        // Thêm thông tin vào model nếu cần
-        model.addAttribute("message", "Đây là trang thử nghiệm thứ 2!");
-        return "testPage2"; // Trả về trang testPage2.html
-    }
-    
-    @GetMapping("/test1")
-    @ResponseBody
-    public String citizenTest(@RequestParam String param) {
-        // Trả về kết quả trực tiếp dưới dạng chuỗi
-        return "Bạn đã truyền tham số: " + param;
-    }
 }
