@@ -1,0 +1,31 @@
+body {
+            font-family: Arial, sans-serif;
+          
+        }
+
+        /* CSS cho footer */
+footer {
+    background-color: #00CCFF; /* Màu nền */
+    color: black; /* Màu chữ đen */
+    text-align: center; /* Căn giữa nội dung */
+    padding: 10px; /* Khoảng cách xung quanh nội dung */
+    position: fixed; /* Đặt footer cố định */
+    bottom: 0; /* Đặt ở dưới cùng của trang */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+}
+footer nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+footer nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+footer nav ul li a {
+            color: red;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+       
