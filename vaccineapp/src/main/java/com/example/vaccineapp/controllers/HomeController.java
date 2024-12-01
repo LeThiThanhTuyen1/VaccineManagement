@@ -8,13 +8,19 @@ public class HomeController {
 	@GetMapping("/login")
 	public String showLoginForm() {
 	    System.out.println("Rendering login page");
-	    return "login"; // Trả về trang login.html
+	    return "login";
 	}
 	
 	@GetMapping("/")
 	public String Home() {
 	    System.out.println("Rendering home page");
-	    return "home"; // Trả về trang login.html
+	    return "home"; 
+	}
+	
+	@GetMapping("/public/header")
+	public String Header() {
+	    System.out.println("Rendering header page");
+	    return "header";
 	}
 
 }

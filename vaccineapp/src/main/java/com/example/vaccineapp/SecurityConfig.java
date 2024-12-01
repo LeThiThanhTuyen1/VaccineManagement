@@ -16,7 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/public/**", "/test", "/test1").permitAll() // Cho phép truy cập không cần đăng nhập
+            .requestMatchers("/public/**").permitAll() // Cho phép truy cập không cần đăng nhập
             .anyRequest().authenticated() // Các yêu cầu khác phải xác thực
         )
         .formLogin(form -> form
