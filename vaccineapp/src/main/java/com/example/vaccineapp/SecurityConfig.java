@@ -23,7 +23,14 @@ public class SecurityConfig {
         .formLogin(form -> form
             .loginPage("/login") // Trang đăng nhập tùy chỉnh
             .permitAll() // Cho phép tất cả truy cập trang đăng nhập
-        );
+        )
+    	.logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login") 
+            .invalidateHttpSession(true) 
+            .clearAuthentication(true)
+            .deleteCookies("JSESSIONID") 
+    	);
         return http.build();
     }
 
