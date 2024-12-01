@@ -16,11 +16,4 @@ public class HomeController {
 	    System.out.println("Rendering home page");
 	    return "home"; 
 	}
-	
-	@GetMapping("/public/header")
-	public String Header() {
-	    System.out.println("Rendering header page");
-	    return "header";
-	}
-
 }
