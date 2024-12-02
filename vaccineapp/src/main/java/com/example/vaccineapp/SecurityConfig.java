@@ -5,15 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -39,28 +36,25 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Tạo người dùng tĩnh trong bộ nhớ với AuthenticationManagerBuilder
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 
             http.getSharedObject(AuthenticationManagerBuilder.class);
 
         authenticationManagerBuilder
-            .inMemoryAuthentication()
-                .withUser(User.builder()
-                    .username("admin")
-                    .password(passwordEncoder().encode("admin123"))
-                    .build());
-        
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder); // Sử dụng mã hóa mật khẩu với BCrypt
+
         return authenticationManagerBuilder.build();
     }
+
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-    	return (web)->web.debug(true).ignoring().requestMatchers("/static/**", "/img/**", "/css/**", "/js/**");
+        return (web)->web.debug(true).ignoring().requestMatchers("/static/**", "/img/**", "/css/**", "/js/**");
     }
-    // Cấu hình PasswordEncoder
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // Dùng NoOpPasswordEncoder chỉ cho mục đích phát triển
+        return new BCryptPasswordEncoder(); // Mã hóa mật khẩu bằng BCrypt
     }
 }
