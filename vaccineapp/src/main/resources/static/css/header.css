@@ -13,9 +13,8 @@ header {
     width: 100%;
 }
 	
-/* Phần trên với logo và tên hệ thống */
 .header-top {
-    background-color: #00CCFF; /* Màu xanh dương nhạt */
+    background-color: #00CCFF; 
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -39,7 +38,7 @@ header {
 		
 /* Thanh menu */
 .menu-bar {
-    background-color: #F0F8FF; /* Màu xanh nghiêng về trắng */
+    background-color: #F0F8FF; 
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
