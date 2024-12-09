@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Vaccination History</title>
+</head>
+<body>
+    <h2>Search Vaccination History</h2>
+
+    <!-- Search Form -->
+    <form th:action="@{/vaccination-history/search}" method="get">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone">
+        
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display Error -->
+    <div th:if="${error}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Display Results -->
+    <div th:if="${citizens}">
+        <h3>Search Results:</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Vaccination History</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="citizen : ${citizens}">
+                    <td th:text="${citizen.fullName}"></td>
+                    <td th:text="${citizen.phoneNumber}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="history : ${citizen.vaccinationHistory}">
+                                <span th:text="'Date: ' + history.vaccinationDate"></span>,
+                                <span th:text="'Status: ' + history.status"></span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

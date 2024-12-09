@@ -20,17 +20,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/public/**", "/login").permitAll() // Cho phép truy cập công khai
-                .anyRequest().authenticated() // Các request khác cần xác thực
+                .requestMatchers("/api/**", "/login").permitAll() 
+                .anyRequest().authenticated() 
             )
             .formLogin(form -> form
-                .loginPage("/login") // Trang đăng nhập tùy chỉnh
-                .defaultSuccessUrl("/home", true) // Chuyển đến trang home sau khi đăng nhập thành công
-                .failureUrl("/login?error=true") // Xử lý lỗi đăng nhập
-                .permitAll() // Cho phép truy cập trang đăng nhập
+                .loginPage("/login") 
+                .defaultSuccessUrl("/home", true) 
+                .failureUrl("/login?error=true") 
+                .permitAll() 
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout=true") // Chuyển hướng sau khi đăng xuất
+                .logoutSuccessUrl("/login?logout=true") 
                 .permitAll()
             );
         return http.build();
@@ -43,8 +43,7 @@ public class SecurityConfig {
 
         authenticationManagerBuilder
             .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder); // Sử dụng mã hóa mật khẩu với BCrypt
-
+            .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
 
@@ -55,6 +54,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Mã hóa mật khẩu bằng BCrypt
+        return new BCryptPasswordEncoder(); 
     }
 }

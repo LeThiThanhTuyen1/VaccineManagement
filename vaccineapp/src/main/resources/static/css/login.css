@@ -19,7 +19,7 @@ form {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
     width: 400px; /* Adjusted width */
     text-align: center;
-    backdrop-filter: blur(10px); /* Stronger glass effect */
+    backdrop-filter: blur(10px); /* Stronger glass effect1` */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
 }
 
@@ -57,6 +57,7 @@ input[type="password"]:focus {
 button {
     background-color: #00CCFF;
     color: white;
+    margin-top: 15px;
     padding: 5px;
     border: none;
     border-radius: 10px;
