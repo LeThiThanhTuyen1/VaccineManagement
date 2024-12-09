@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Tiêm chủng</title>
+    <link rel="stylesheet" href="/css/citizen-management.css">
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+	
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+
+	<form th:action="@{/api/citizens/manage}" method="get">
+	    <label for="group">Chọn nhóm đối tượng:</label>
+	    <select id="group" name="group">
+		    <option value="" th:selected="${group == null}" th:text="'--- Chọn nhóm ---'"></option>
+		    <option th:each="groupOption : ${targetGroups}" 
+		            th:value="${groupOption.name()}" 
+		            th:text="${groupOption.displayName}"
+		            th:selected="${groupOption.name() == group}">
+		    </option>
+		</select >
+	    <button type="submit">Tìm kiếm</button>
+	</form>
+
+    <h2>Danh sách công dân</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Nhóm đối tượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="citizen : ${citizens}">
+                <td th:text="${citizen.fullName}"></td>
+                <td th:text="${citizen.dateOfBirth}"></td>
+                <td th:text="${citizen.phoneNumber}"></td>
+                <td th:text="${citizen.getAddress()}"></td>
+                <td th:text="${citizen.targetGroup.displayName}"></td>
+            </tr>
+        </tbody>
+    </table>
+	
+	<div th:replace="~{footer}"></div>
+</body>
+</html>

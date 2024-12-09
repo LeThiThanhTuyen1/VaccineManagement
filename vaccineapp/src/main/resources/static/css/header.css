@@ -4,10 +4,6 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-		
-body {
-    font-family: Arial, sans-serif;
-}
 
 header {
     width: 100%;
@@ -26,7 +22,7 @@ header {
 }
 		
 .logo-image {
-    height: 40px; /* Chiều cao của logo */
+    height: 40px;
     margin-right: 10px;
 }
 		
