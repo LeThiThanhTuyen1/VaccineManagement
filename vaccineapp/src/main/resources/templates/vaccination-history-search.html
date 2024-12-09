@@ -28,30 +28,32 @@
 		    <p th:text="${error}"></p>
 		</div>
 
-        <div th:if="${citizens}">
+        <div th:if="${histories}">
             <h3>Kết quả:</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Họ và tên</th>
                         <th>Số điện thoại</th>
-                        <th>Lịch sử tiêm chủng</th>
+                        <th>Địa chỉ</th>
+                        <th>Mũi tiêm</th>
+                        <th>Ngày tiêm</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="citizen : ${citizens}">
-                        <td th:text="${citizen.fullName}"></td>
-                        <td th:text="${citizen.phoneNumber}"></td>
-                        <td>
-                            <ul>
-                                <li th:each="history : ${citizen.vaccinationHistory}">
-                                    <strong>Ngày tiêm:</strong> <span th:text="${history.vaccinationDate}"></span>,
-                                    <strong>Trạng thái:</strong> <span th:text="${history.status}"></span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
+				    <tr th:each="history : ${histories}">
+				        <td th:text="${history.citizen.fullName}"></td>
+						<td th:text="${history.citizen.phoneNumber}"></td>
+						<td th:text="${history.citizen.addressDetail + ', '
+									 + history.citizen.ward.name + ', ' 
+						             + history.citizen.ward.district.name + ', ' 
+						             + history.citizen.ward.district.province.name}"></td>
+						<td th:text="${history.vaccine.name}"></td>
+						<td th:text="${history.vaccinationDate}"></td>
+						<td th:text="${history.status.displayName}"></td>
+					</tr>
+				</tbody>
             </table>
         </div>
     </div>

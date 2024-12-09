@@ -27,8 +27,18 @@ public class VaccinationHistory {
     private Status status;
 
     public enum Status {
-        COMPLETED,
-        MISSED
+        COMPLETED("ĐÃ TIÊM"),
+        MISSED("CHƯA TIÊM");
+    	
+    	private final String displayName;
+
+        Status(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
     // Getters and Setters

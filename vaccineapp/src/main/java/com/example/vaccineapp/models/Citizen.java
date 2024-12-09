@@ -33,7 +33,10 @@ public class Citizen {
     @Enumerated(EnumType.STRING)
     @Column(name = "target_group")
     private TargetGroup targetGroup;
-        
+    
+    @Transient
+	private List<VaccinationHistory> vaccinationHistory;
+
     public Citizen() {
 		// TODO Auto-generated constructor stub
 	}
@@ -94,9 +97,6 @@ public class Citizen {
 		this.addressDetail = addressDetail;
 	}
 	
-	@Transient
-	private List<VaccinationHistory> vaccinationHistory;
-
 	public List<VaccinationHistory> getVaccinationHistory() {
 	    return vaccinationHistory;
 	}

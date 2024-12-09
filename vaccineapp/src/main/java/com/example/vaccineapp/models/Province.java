@@ -5,14 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "wards")
-public class Ward {
-	
+@Table(name = "provinces")
+public class Province {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,9 +17,9 @@ public class Ward {
 	@Column(name = "name")
 	private String name;
 	
-	@ManyToOne
-    @JoinColumn(name = "district_id", nullable = false)
-    private District district;
+	public Province() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getName() {
 		return name;
@@ -32,15 +29,7 @@ public class Ward {
 		this.name = name;
 	}
 	
-	public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-    
-	public Ward() {
-		// TODO Auto-generated constructor stub
+	public Province(String name) {
+		this.name = name;
 	}
 }

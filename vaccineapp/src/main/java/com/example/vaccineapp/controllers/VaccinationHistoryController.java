@@ -1,8 +1,6 @@
 package com.example.vaccineapp.controllers;
 
-import com.example.vaccineapp.models.Citizen;
 import com.example.vaccineapp.models.VaccinationHistory;
-import com.example.vaccineapp.repositories.CitizenRepository;
 import com.example.vaccineapp.repositories.VaccinationHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,16 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.List;
-
-import javax.swing.plaf.ViewportUI;
 
 @Controller
 public class VaccinationHistoryController {
-
-    @Autowired
-    private CitizenRepository citizenRepository;
 
     @Autowired
     private VaccinationHistoryRepository vaccinationHistoryRepository;
@@ -35,30 +27,21 @@ public class VaccinationHistoryController {
             return "vaccination-history-search";
         }
 
-        List<Citizen> citizens;
-        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty()) {
-            citizens = citizenRepository.findByNameAndPhone(name, phone);
-        } else if (name != null && !name.isEmpty()) {
-            citizens = citizenRepository.findByFullNameContainingIgnoreCase(name);
-        } else {
-            citizens = citizenRepository.findByPhoneNumberContaining(phone);
-        }
+        name = (name == null ? "" : name.trim());
+        phone = (phone == null ? "" : phone.trim());
 
-        if (citizens.isEmpty()) {
+        List<VaccinationHistory> histories = vaccinationHistoryRepository.findDetailedVaccinationHistory(name, phone);
+
+        if (histories.isEmpty()) {
             model.addAttribute("error", "Không tìm thấy kết quả phù hợp với thông tin tìm kiếm.");
             model.addAttribute("name", name);
             model.addAttribute("phone", phone);
             return "vaccination-history-search";
         }
 
-        citizens.forEach(citizen -> {
-            List<VaccinationHistory> history = vaccinationHistoryRepository.findByCitizenId(citizen.getId());
-            citizen.setVaccinationHistory(history);
-        });
-
         model.addAttribute("name", name);
         model.addAttribute("phone", phone);
-        model.addAttribute("citizens", citizens);
+        model.addAttribute("histories", histories);
         return "vaccination-history-search";
     }
 }

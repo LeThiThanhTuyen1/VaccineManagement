@@ -10,9 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "wards")
-public class Ward {
-	
+@Table(name = "districts")
+public class District {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,8 +20,12 @@ public class Ward {
 	private String name;
 	
 	@ManyToOne
-    @JoinColumn(name = "district_id", nullable = false)
-    private District district;
+	@JoinColumn(name = "province_id")
+	private Province province;
+	
+	public District() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getName() {
 		return name;
@@ -31,16 +34,17 @@ public class Ward {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public District getDistrict() {
-        return district;
-    }
 
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-    
-	public Ward() {
-		// TODO Auto-generated constructor stub
+	public Province getProvince() {
+		return province;
+	}
+
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	
+	public District(String name, Province province) {
+		this.name = name;
+		this.province = province;
 	}
 }
