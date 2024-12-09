@@ -51,6 +51,7 @@ public class CitizenController {
             citizens = citizenService.findAllCitizens();
         }
         
+        model.addAttribute("group", group);
         model.addAttribute("citizens", citizens);
         model.addAttribute("targetGroups", TargetGroup.values());
         return "citizen-management";

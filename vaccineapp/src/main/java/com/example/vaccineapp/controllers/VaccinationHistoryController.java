@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.plaf.ViewportUI;
@@ -24,17 +25,29 @@ public class VaccinationHistoryController {
     private VaccinationHistoryRepository vaccinationHistoryRepository;
 
     @GetMapping("/vaccination-history/search")
-    public String searchVaccinationHistory(@RequestParam(value = "name", required = false) String name,
-                                           @RequestParam(value = "phone", required = false) String phone,
-                                           Model model) {
-        List<Citizen> citizens;
+    public String searchVaccinationHistory(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "phone", required = false) String phone,
+            Model model) {
 
-        if (name != null && !name.isEmpty()) {
+        if ((name == null || name.isEmpty()) && (phone == null || phone.isEmpty())) {
+            model.addAttribute("error", "Vui lòng nhập ít nhất một trường tìm kiếm.");
+            return "vaccination-history-search";
+        }
+
+        List<Citizen> citizens;
+        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty()) {
+            citizens = citizenRepository.findByNameAndPhone(name, phone);
+        } else if (name != null && !name.isEmpty()) {
             citizens = citizenRepository.findByFullNameContainingIgnoreCase(name);
-        } else if (phone != null && !phone.isEmpty()) {
-            citizens = citizenRepository.findByPhoneNumberContaining(phone);
         } else {
-            model.addAttribute("error", "Vui lòng nhập thông tin tìm kiếm.");
+            citizens = citizenRepository.findByPhoneNumberContaining(phone);
+        }
+
+        if (citizens.isEmpty()) {
+            model.addAttribute("error", "Không tìm thấy kết quả phù hợp với thông tin tìm kiếm.");
+            model.addAttribute("name", name);
+            model.addAttribute("phone", phone);
             return "vaccination-history-search";
         }
 
@@ -43,6 +56,8 @@ public class VaccinationHistoryController {
             citizen.setVaccinationHistory(history);
         });
 
+        model.addAttribute("name", name);
+        model.addAttribute("phone", phone);
         model.addAttribute("citizens", citizens);
         return "vaccination-history-search";
     }

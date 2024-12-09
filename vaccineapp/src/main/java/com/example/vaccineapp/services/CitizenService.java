@@ -1,5 +1,6 @@
 package com.example.vaccineapp.services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,17 @@ public class CitizenService {
         return citizenRepository.findByTargetGroup(targetGroup);
     }
     
+    public List<Citizen> searchCitizens(String name, String phone) {
+        if (name != null && !name.trim().isEmpty() && phone != null && !phone.trim().isEmpty()) {
+            return citizenRepository.findByNameAndPhone(name, phone);
+        } else if (name != null && !name.trim().isEmpty()) {
+            return citizenRepository.findByFullNameContainingIgnoreCase(name);
+        } else if (phone != null && !phone.trim().isEmpty()) {
+            return citizenRepository.findByPhoneNumberContaining(phone);
+        }
+        return Collections.emptyList();
+    }
+
     public void applyVaccinationPolicy(Citizen citizen) {
         if (citizen.getTargetGroup() == TargetGroup.ELDERLY) {
             // Áp dụng chính sách cho người già
