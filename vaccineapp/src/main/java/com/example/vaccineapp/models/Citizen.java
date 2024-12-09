@@ -104,6 +104,18 @@ public class Citizen {
 	public void setVaccinationHistory(List<VaccinationHistory> vaccinationHistory) {
 	    this.vaccinationHistory = vaccinationHistory;
 	}
+	
+	public String getAddress() {
+	    if (ward != null) {
+	        String wardName = ward.getName() != null ? ward.getName() : "";
+	        String districtName = ward.getDistrict() != null ? ward.getDistrict().getName() : "";
+	        String provinceName = ward.getDistrict() != null && ward.getDistrict().getProvince() != null 
+	            ? ward.getDistrict().getProvince().getName() 
+	            : "";
+	        return String.format("%s, %s, %s, %s", addressDetail, wardName, districtName, provinceName);
+	    }
+	    return addressDetail;
+	}
 
 	public Citizen(String fullName, String phoneNumber, Ward ward, String addressDetail, LocalDate dateOfBirth,
 			TargetGroup targetGroup) {
@@ -114,7 +126,7 @@ public class Citizen {
 		this.dateOfBirth = dateOfBirth;
 		this.targetGroup = targetGroup;
 	}
-
+	
 	public Citizen(Long id, String fullName, String phoneNumber, Ward ward, String addressDetail,
 			LocalDate dateOfBirth, TargetGroup targetGroup) {
 		this.id = id;

@@ -41,7 +41,7 @@
                 <td th:text="${citizen.fullName}"></td>
                 <td th:text="${citizen.dateOfBirth}"></td>
                 <td th:text="${citizen.phoneNumber}"></td>
-                <td th:text="${citizen.addressDetail}"></td>
+                <td th:text="${citizen.getAddress()}"></td>
                 <td th:text="${citizen.targetGroup.displayName}"></td>
             </tr>
         </tbody>

@@ -30,14 +30,4 @@ public class CitizenService {
     public List<Citizen> findCitizensByTargetGroup(TargetGroup targetGroup) {
         return citizenRepository.findByTargetGroup(targetGroup);
     }
-
-    public void applyVaccinationPolicy(Citizen citizen) {
-        if (citizen.getTargetGroup() == TargetGroup.ELDERLY) {
-            // Áp dụng chính sách cho người già
-        } else if (citizen.getTargetGroup() == TargetGroup.PREGNANT_WOMEN) {
-            // Áp dụng chính sách cho phụ nữ mang thai
-        } 
-        // Các chính sách khác
-    }
-
 }

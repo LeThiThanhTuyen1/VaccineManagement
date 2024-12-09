@@ -12,17 +12,12 @@ public interface VaccinationHistoryRepository extends JpaRepository<VaccinationH
     List<VaccinationHistory> findByCitizenId(Long citizenId);
 
     @Query("""
-        SELECT vh
-        FROM VaccinationHistory vh
-        JOIN FETCH vh.citizen c
-        JOIN FETCH c.ward w
-        JOIN FETCH w.district d
-        JOIN FETCH d.province p
-        JOIN FETCH vh.vaccine v
-        WHERE LOWER(c.fullName) LIKE LOWER(CONCAT('%', :name, '%'))
-          AND c.phoneNumber LIKE CONCAT('%', :phone, '%')
-    """)
+    	    SELECT vh
+    	    FROM VaccinationHistory vh
+    	    WHERE LOWER(vh.citizen.fullName) LIKE LOWER(CONCAT('%', :name, '%'))
+    	      AND vh.citizen.phoneNumber LIKE CONCAT('%', :phone, '%')
+    	""")
     List<VaccinationHistory> findDetailedVaccinationHistory(
-        @Param("name") String name,
-        @Param("phone") String phone);
+    	@Param("name") String name,
+    	@Param("phone") String phone);
 }

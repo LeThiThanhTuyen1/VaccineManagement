@@ -45,10 +45,7 @@
 				    <tr th:each="history : ${histories}">
 				        <td th:text="${history.citizen.fullName}"></td>
 						<td th:text="${history.citizen.phoneNumber}"></td>
-						<td th:text="${history.citizen.addressDetail + ', '
-									 + history.citizen.ward.name + ', ' 
-						             + history.citizen.ward.district.name + ', ' 
-						             + history.citizen.ward.district.province.name}"></td>
+						<td th:text="${history.citizen.getAddress()}"></td>
 						<td th:text="${history.vaccine.name}"></td>
 						<td th:text="${history.vaccinationDate}"></td>
 						<td th:text="${history.status.displayName}"></td>
