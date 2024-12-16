@@ -51,4 +51,23 @@ public class UserController {
 		}
 		return "user-account-manage";
 	}
+	
+	@GetMapping("/create")
+    public String showCreateUserPage(Model model) {
+        return "create-user"; // Trả về view "create-user" để hiển thị form
+    }
+
+    @PostMapping("/save")
+    public String saveUser(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam("role") String role, 
+                           Model model) {
+        try {
+            userService.createUser(username, password, role); // Gọi service để tạo tài khoản mới
+            model.addAttribute("message", "Tạo tài khoản thành công.");
+        } catch (Exception e) {
+            model.addAttribute("error", "Có lỗi xảy ra khi tạo tài khoản.");
+        }
+        return "redirect:/users/manage"; // Sau khi tạo tài khoản thành công, chuyển đến trang quản lý
+    }
 }

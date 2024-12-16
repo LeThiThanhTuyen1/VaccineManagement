@@ -8,6 +8,10 @@
 	<div th:replace="~{header}"></div>
 	<h2>Danh sách Tài Khoản</h2>
 	
+	<div>
+        <a th:href="@{/users/create}" class="btn btn-primary">Thêm tài khoản</a>
+    </div>
+    
 	<form th:action="@{/users/search}" method="get">
 	    <input type="text" name="username" th:value="${username}" placeholder="Nhập tên tài khoản để tìm kiếm..." required />
 	    <button type="submit">Tìm kiếm</button>
