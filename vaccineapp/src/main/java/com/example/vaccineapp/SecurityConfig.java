@@ -38,9 +38,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(customizer -> customizer.disable())
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login", "/users/search/**").permitAll()
+                .requestMatchers("/login").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                //.requestMatchers("/users/**").hasRole("ADMIN")
+                .requestMatchers("/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
