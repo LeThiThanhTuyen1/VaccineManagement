@@ -15,11 +15,14 @@
             </div>
         </div>
         <nav class="menu-bar">
-            <ul class="menu">
+            <ul th:if="${isManager}" class="menu">
                 <li><a href="/vaccination-history/search">Tra cứu</a></li>
-                <li><a href="#">Chức năng 1</a></li>
-                <li><a href="#">Chức năng 2</a></li>
-                <li><a href="/api/citizens/manage">Nhóm đối tượng</a></li>
+                <li><a href="/citizens/management">Nhóm đối tượng</a></li>
+            </ul>
+            
+            <ul th:if="${isAdmin}" class="menu">
+                <li><a href="/admin/users/manage">Tài khoản</a></li>
+                <li><a href="/">Vắc xin</a></li>
             </ul>
             <div class="logout">
                 <a href="/logout">Đăng xuất</a>

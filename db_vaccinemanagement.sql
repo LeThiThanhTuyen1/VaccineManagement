@@ -4,9 +4,11 @@ CREATE TABLE `vaccine_management`.`users` (
   `id` INT NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(225) NOT NULL,
-  `enabled` BOOLEAN NOT NULL,
+  `role` ENUM('MANAGER', 'ADMIN'),
+  `enabled` boolean not null default false,
   PRIMARY KEY (`id`)
 );
+
 CREATE TABLE provinces (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL          -- Tên tỉnh/thành phố
@@ -63,8 +65,8 @@ CREATE TABLE vaccination_history (
 );
 
 -- Thêm tài khoản
-INSERT INTO `vaccine_management`.`users` (`id`, `username`, `password`, `enabled`) 
-VALUES ('1', 'admin', '$2a$10$PvJmK80Cn0qgmOIlKBPZJeXta61qAPyQV66qX7U/4PNkTrI4SvEka', true); -- pass: admin123
+INSERT INTO `vaccine_management`.`users` (`id`, `username`, `password`, role, `enabled`) 
+VALUES ('1', 'admin', '$2a$10$I21tJHZfr69zAScdkfr0UuMOVoq4ytSFTaBJcYkdygkv1TqhHQtR6', 'ADMIN', true); -- pass: admin123
 
 INSERT INTO provinces (name) VALUES 
 ('Hà Nội'),

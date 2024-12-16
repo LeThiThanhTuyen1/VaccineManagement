@@ -1,6 +1,8 @@
 package com.example.vaccineapp.services;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +30,32 @@ public class UserService implements UserDetailsService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .disabled(!user.isEnabled())
-                .authorities(new ArrayList<>()) // Cấp quyền rỗng, bạn có thể thêm các quyền phù hợp nếu cần
+                .authorities("ROLE_" + user.getRole())   
                 .build();
+    }
+    
+    public void disableUserAccount(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        
+        user.setEnabled(false);
+        userRepository.save(user);
+        System.out.print(id);
+    }
+
+    public void enableUserAccount(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+    
+    public List<User> findUsersByUsername(String username) {
+        return userRepository.findByUsernameContaining(username); // Sử dụng query để tìm kiếm
     }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Tài khoản</title>
+    <link rel="stylesheet" href="/css/citizen-list.css" />
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+	<h2>Danh sách Tài Khoản</h2>
+	
+	<form th:action="@{/users/search}" method="get">
+	    <input type="text" name="username" placeholder="Nhập tên tài khoản để tìm kiếm..." required />
+	    <button type="submit">Tìm kiếm</button>
+	</form>
+
+	<table>
+		<tr>
+			<th>Username</th>
+			<th>Vai trò</th>
+			<th>Trạng thái</th>
+			<th>Hành động</th>
+		</tr>
+		<tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.role}"></td>
+                <td th:text="${user.enabled ? 'Đã kích hoạt' : 'Chưa kích hoạt'}"></td>
+				<td>
+				    <!-- Form disable-user khi tài khoản đã kích hoạt -->
+				    <form th:action="@{/users/disable-user}" method="post" style="display: inline;" th:if="${user.enabled}">
+				        <input type="hidden" name="id" th:value="${user.id}" />
+				        <button type="submit" th:text="'Tắt tài khoản'"></button>
+				    </form>
+				    <!-- Form enable-user khi tài khoản chưa kích hoạt -->
+				    <form th:action="@{/users/enable-user}" method="post" style="display: inline;" th:if="${!user.enabled}">
+				        <input type="hidden" name="id" th:value="${user.id}" />
+				        <button type="submit" th:text="'Kích hoạt tài khoản'"></button>
+				    </form>
+				</td>
+            </tr>
+        </tbody>
+	</table>
+
+
+	<div th:replace="~{footer}"></div>
+</body>
+</html>
