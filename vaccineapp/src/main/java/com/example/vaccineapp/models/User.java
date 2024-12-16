@@ -15,18 +15,30 @@ public class User {
 
 	@Column(nullable = false)
 	private String password;
-
+	
+	@Column(nullable = false)
+	private String role; //ADMIN hoặc MANAGER
+	
 	@Column(nullable = false)
 	private boolean enabled;
-
+	
 	public User() {
 	}
-
-	public User(String username, String password, boolean enabled) {
+	
+	public User(long id, String username, String password, String role, boolean enabled) {
+		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.role = role;
 		this.enabled = enabled;
 	}
+
+	public User(String username, String password, boolean enabled, String role) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
+    }
 
 	public long getId() {
 		return id;
@@ -59,4 +71,12 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

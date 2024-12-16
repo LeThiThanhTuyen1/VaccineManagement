@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping("/api/citizens")
+@RequestMapping("/citizens")
 public class CitizenController {
     
 	@Autowired
@@ -36,7 +36,7 @@ public class CitizenController {
     }
     
     
-    @GetMapping("/manage")
+    @GetMapping("/management")
     public String showCitizenManagementPage(@RequestParam(value = "group", required = false) String group, Model model) {
         List<Citizen> citizens;
         try {
