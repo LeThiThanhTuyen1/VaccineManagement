@@ -64,7 +64,11 @@ public class UserService implements UserDetailsService {
     }
     
     public void createUser(String username, String password, String role) {
-        User user = new User();
+    	if (userRepository.findByUsername(username) != null) {
+    	   throw new IllegalArgumentException("Tài khoản đã tồn tại.");
+    	}
+    	 
+    	User user = new User();
         user.setUsername(username);
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword); 

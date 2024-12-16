@@ -7,7 +7,9 @@
 <body>
     <div th:replace="~{header}"></div>
     <h2>Thêm Tài Khoản Mới</h2>
-
+	<div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
     <form th:action="@{/users/save}" method="post">
         <div>
             <label for="username">Username:</label>
