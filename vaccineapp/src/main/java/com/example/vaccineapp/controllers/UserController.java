@@ -18,29 +18,56 @@ import com.example.vaccineapp.services.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/manage")
 	public String accountList(Model model) {
-	    model.addAttribute("users", userService.findAllUsers()); // Thêm danh sách người dùng vào model
+		model.addAttribute("users", userService.findAllUsers());
 		return "user-account-manage";
 	}
 
 	@PostMapping("/enable-user")
 	public String enableUser(@RequestParam("id") Long userId) {
-	    userService.enableUserAccount(userId);
-	    return "redirect:/users/manage"; // Chuyển hướng về danh sách người dùng sau khi kích hoạt lại tài khoản
+		userService.enableUserAccount(userId);
+		return "redirect:/users/manage";
 	}
 
 	@PostMapping("/disable-user")
 	public String disableUser(@RequestParam("id") Long userId) {
-	    userService.disableUserAccount(userId);
-	    return "redirect:/users/manage"; // Chuyển hướng về danh sách người dùng sau khi tắt tài khoản
+		userService.disableUserAccount(userId);
+		return "redirect:/users/manage";
+	}
+
+	@GetMapping("/search")
+	public String searchUsers(@RequestParam("username") String username, Model model) {
+		model.addAttribute("username", username);
+		try {
+			List<User> users = userService.findUsersByUsername(username);
+			if (users.isEmpty()) {
+				model.addAttribute("error", "Không tìm thấy tài khoản nào.");
+			}
+			model.addAttribute("users", users);
+		} catch (Exception e) {
+			model.addAttribute("error", "Có lỗi xảy ra trong quá trình tìm kiếm.");
+		}
+		return "user-account-manage";
 	}
 	
-	 @GetMapping("/users/search")
-	    public String searchUsers(@RequestParam("username") String username, Model model) {
-	        List<User> users = userService.findUsersByUsername(username);
-	        model.addAttribute("users", users);
-	        return "user-account-manage"; // Tên view
-	    }
+	@GetMapping("/create")
+    public String showCreateUserPage(Model model) {
+        return "create-user"; // Trả về view "create-user" để hiển thị form
+    }
+
+    @PostMapping("/save")
+    public String saveUser(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam("role") String role, 
+                           Model model) {
+        try {
+            userService.createUser(username, password, role); // Gọi service để tạo tài khoản mới
+            model.addAttribute("message", "Tạo tài khoản thành công.");
+        } catch (Exception e) {
+            model.addAttribute("error", "Có lỗi xảy ra khi tạo tài khoản.");
+        }
+        return "redirect:/users/manage"; // Sau khi tạo tài khoản thành công, chuyển đến trang quản lý
+    }
 }
