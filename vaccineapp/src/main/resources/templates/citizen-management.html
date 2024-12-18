@@ -12,7 +12,7 @@
         <p th:text="${message}"></p>
     </div>
 
-	<form th:action="@{/manage/citizens/management}" method="get">
+	<form th:action="@{/citizens/management}" method="get">
 	    <label for="group">Chọn nhóm đối tượng:</label>
 	    <select id="group" name="group">
 		    <option value="" th:selected="${group == null}" th:text="'--- Chọn nhóm ---'"></option>

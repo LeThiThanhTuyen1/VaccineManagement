@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách Vaccines</title>
+    <link rel="stylesheet" href="/css/list-manage.css" />
+</head>
+<body>
+    <div th:replace="~{header}"></div>
+    
+    <div class="container">
+        <h2>Danh sách Vaccines</h2>
+        <a href="/vaccines/create" class="btn btn-primary">Thêm Vaccine</a>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên Vaccine</th>
+                    <th>Nhà sản xuất</th>
+                    <th>Ngày hết hạn</th>
+                    <th>Số lượng</th>
+                    <th>Mô tả</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vaccine : ${vaccines}">
+                    <td th:text="${vaccine.name}"></td>
+                    <td th:text="${vaccine.manufacturer}"></td>
+                    <td th:text="${vaccine.expirationDate}"></td>
+                    <td th:text="${vaccine.quantity}"></td>
+                    <td th:text="${vaccine.description}"></td>
+                    <td>
+                        <a th:href="@{/vaccines/edit/{id}(id=${vaccine.id})}" class="btn btn-warning">Sửa</a>
+                        <form th:action="@{/vaccines/delete/{id}(id=${vaccine.id})}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="~{footer}"></div>
+</body>
+</html>

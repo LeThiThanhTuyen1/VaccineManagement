@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm Vaccine</title>
+    <link rel="stylesheet" href="/css/add-manage.css" />
+</head>
+<body id="add-vaccine-page">
+    <div th:replace="~{header}"></div>
+   
+    <div class="container">
+        <h2>Thêm Vaccine Mới</h2>
+        <form th:action="@{/vaccines/save}" method="post">
+            <div class="form-group">
+                <label for="name">Tên Vaccine:</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Nhà sản xuất:</label>
+                <input type="text" id="manufacturer" name="manufacturer" />
+            </div>
+            <div class="form-group">
+                <label for="expirationDate">Ngày hết hạn:</label>
+                <input type="date" id="expirationDate" name="expirationDate" />
+            </div>
+            <div class="form-group">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" name="quantity" />
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn-save">Lưu Vaccine</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="~{footer}"></div>
+</body>
+</html>
