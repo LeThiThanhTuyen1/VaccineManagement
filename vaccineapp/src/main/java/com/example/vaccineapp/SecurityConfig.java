@@ -23,15 +23,15 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
     private RoleInterceptor roleInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(roleInterceptor).addPathPatterns("/**");
-    }
-
+    
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.debug(true).ignoring().requestMatchers("/static/**", "/img/**", "/css/**", "/js/**");
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(roleInterceptor).addPathPatterns("/**");
     }
 
     @Bean
