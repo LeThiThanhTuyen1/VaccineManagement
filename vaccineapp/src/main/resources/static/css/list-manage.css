@@ -8,12 +8,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-form {
-    display: flex;
-    gap: 10px; 
-    margin-bottom: 20px; 
-}
-
 .btn.btn-primary {
     background-color: #28a745;
     color: white;
@@ -29,7 +23,7 @@ form {
 }
 
 input[type="text"] {
-	margin-top: 20px;
+    margin-top: 20px;
     padding: 8px;
     font-size: 14px;
     width: 200px;
@@ -39,7 +33,6 @@ input[type="text"] {
 
 button[type="submit"] {
     padding: 8px 16px;
-    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -49,7 +42,6 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
 }
 
 table {
@@ -59,7 +51,7 @@ table {
 }
 
 table th, table td {
-    padding: 12px;
+    padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
 }
@@ -68,15 +60,43 @@ table th {
     background-color: #f4f4f4;
 }
 
-form button[type="submit"] {
+form button[type="submit"], .btn-warning, .btn-danger {
     padding: 6px 12px;
-    background-color: #ffc107;
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-form button[type="submit"]:hover {
+.btn-warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-warning:hover {
     background-color: #e0a800;
+}
+
+/* Danger button style (Delete) */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 6px; 
+    }
+
+    .btn.btn-primary, .btn-warning, .btn-danger {
+        font-size: 14px;
+    }
 }

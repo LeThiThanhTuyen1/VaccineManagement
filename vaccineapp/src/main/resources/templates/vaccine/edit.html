@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sửa Vaccine</title>
+    <link rel="stylesheet" href="/css/edit-manage.css" />
+</head>
+<body>
+    <div th:replace="~{header}"></div>
+   
+    <div class="container">
+        <h2>Sửa Vaccine</h2>
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
+        <form th:action="@{/vaccines/update/{id}(id=${vaccine.id})}" method="post">
+            <div>
+                <label for="name">Tên Vaccine:</label>
+                <input type="text" id="name" name="name" th:value="${vaccine.name}" required />
+            </div>
+            <div>
+                <label for="manufacturer">Nhà sản xuất:</label>
+                <input type="text" id="manufacturer" name="manufacturer" th:value="${vaccine.manufacturer}" />
+            </div>
+            <div>
+                <label for="expirationDate">Ngày hết hạn:</label>
+                <input type="date" id="expirationDate" name="expirationDate" th:value="${vaccine.expirationDate}" />
+            </div>
+            <div>
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" name="quantity" th:value="${vaccine.quantity}" />
+            </div>
+            <div>
+                <label for="description">Mô tả:</label>
+                <textarea id="description" name="description" th:text="${vaccine.description}"></textarea>
+            </div>
+            <div>
+                <button type="submit">Cập nhật Vaccine</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="~{footer}"></div>
+</body>
+</html>
