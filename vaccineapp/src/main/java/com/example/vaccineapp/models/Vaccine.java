@@ -7,81 +7,123 @@ import java.time.LocalDate;
 @Table(name = "vaccines")
 public class Vaccine {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column
-    private String manufacturer;
+	@Column
+	private String manufacturer;
 
-    @Column(name = "expiration_date")
-    private LocalDate expirationDate;
+	@Column(name = "expiration_date")
+	private LocalDate expirationDate;
 
-    @Column
-    private Integer quantity;
+	@Column
+	private Integer quantity;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+	@Column
+	private int price;
 
-    // Constructors, Getters, and Setters
-    public Vaccine() {}
+	@Enumerated(EnumType.STRING)
+	@Column
+	private Status status;
 
-    public Vaccine(String name, String manufacturer, LocalDate expirationDate, Integer quantity, String description) {
-        this.name = name;
-        this.manufacturer = manufacturer;
-        this.expirationDate = expirationDate;
-        this.quantity = quantity;
-        this.description = description;
+	@Column(columnDefinition = "TEXT")
+	private String description;
+	
+	public enum Status {
+        IN_STOCK("TỒN KHO"),
+        EXPIRATION("HẾT");
+    	
+    	private final String displayName;
+
+        Status(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
+	
+	// Constructors, Getters, and Setters
+	public Vaccine() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Vaccine(String name, String manufacturer, LocalDate expirationDate, Integer quantity, int price,
+			Status status, String description) {
+		this.name = name;
+		this.manufacturer = manufacturer;
+		this.expirationDate = expirationDate;
+		this.quantity = quantity;
+		this.price = price;
+		this.status = status;
+		this.description = description;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
+	public String getManufacturer() {
+		return manufacturer;
+	}
 
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
 
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+	public Integer getQuantity() {
+		return quantity;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }

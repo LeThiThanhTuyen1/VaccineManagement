@@ -22,7 +22,7 @@ public class UserController {
 	@GetMapping("/manage")
 	public String accountList(Model model) {
 		model.addAttribute("users", userService.findAllUsers());
-		return "user-account-manage";
+		return "user/list";
 	}
 
 	@PostMapping("/enable-user")
@@ -49,12 +49,12 @@ public class UserController {
 		} catch (Exception e) {
 			model.addAttribute("error", "Có lỗi xảy ra trong quá trình tìm kiếm.");
 		}
-		return "user-account-manage";
+		return "redirect:/users/manage";
 	}
 	
 	@GetMapping("/create")
     public String showCreateUserPage(Model model) {
-        return "create-user"; 
+        return "user/add"; 
     }
 
     @PostMapping("/save")

@@ -36,12 +36,12 @@
 					    <!-- Form disable-user khi tài khoản đã kích hoạt -->
 					    <form th:action="@{/users/disable-user}" method="post" style="display: inline;" th:if="${user.enabled}">
 					        <input type="hidden" name="id" th:value="${user.id}" />
-					        <button type="submit" th:text="'Tắt tài khoản'"></button>
+					        <button class="btn btn-danger" type="submit" th:text="'Tắt tài khoản'"></button>
 					    </form>
 					    <!-- Form enable-user khi tài khoản chưa kích hoạt -->
 					    <form th:action="@{/users/enable-user}" method="post" style="display: inline;" th:if="${!user.enabled}">
 					        <input type="hidden" name="id" th:value="${user.id}" />
-					        <button type="submit" th:text="'Kích hoạt tài khoản'"></button>
+					        <button class=" btn btn-warning" type="submit" th:text="'Kích hoạt tài khoản'"></button>
 					    </form>
 					</td>
 	            </tr>
