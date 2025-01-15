@@ -29,7 +29,7 @@ CREATE TABLE citizens (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,    -- Họ tên công dân
     date_of_birth DATE,                 -- Ngày sinh
-    phone_number VARCHAR(20),           -- Số điện thoại
+    phone_number VARCHAR(20) unique,           -- Số điện thoại
     ward_id BIGINT,                     -- Mã xã/phường
     address_detail VARCHAR(255),        -- Địa chỉ chi tiết (nhà số, đường, v.v.)
     target_group ENUM('CHILD', 'ELDERLY', 'PREGNANT_WOMEN', 'OTHER') DEFAULT 'OTHER', -- Nhóm đối tượng
@@ -41,6 +41,8 @@ CREATE TABLE vaccines (
     manufacturer VARCHAR(255),         -- Nhà sản xuất
     expiration_date DATE,              -- Ngày hết hạn
     quantity INT,                      -- Số lượng vắc xin còn lại
+    price BIGINT(10),            	   -- Giá vắc xin
+    status  ENUM('IN_STOCK', 'EXPIRATION') DEFAULT 'IN_STOCK', -- trạng thái kho vắc xin
     description TEXT                   -- Mô tả chi tiết vắc xin
 );
 CREATE TABLE registrations (

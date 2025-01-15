@@ -1,6 +1,7 @@
 .container {
     padding-left: 20px; 
     padding-right: 20px; 
+    flex: 1;
 }
 
 h2 {
@@ -15,7 +16,6 @@ h2 {
     border-radius: 5px;
     text-decoration: none;
     margin-bottom: 20px; 
-    margin-top: 20px; 
 }
 
 .btn.btn-primary:hover {
@@ -39,7 +39,6 @@ button[type="submit"] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 24px!important;
     height: 36px;
 }
 
@@ -72,7 +71,9 @@ form button[type="submit"], .btn-warning, .btn-danger {
 }
 
 .btn-warning {
-    background-color: #ffc107;
+    background-color: #ffc107!important;
+    padding: 10px 12px;
+    text-decoration: none;
     color: white;
 }
 
@@ -81,13 +82,13 @@ form button[type="submit"], .btn-warning, .btn-danger {
 }
 
 /* Danger button style (Delete) */
-.btn-danger {
-    background-color: #dc3545;
+.btn.btn-danger {
+    background-color: #dc3545!important;
     color: white;
 }
 
-.btn-danger:hover {
-    background-color: #c82333;
+.btn.btn-danger:hover {
+    background-color: rgb(255, 0, 0);
 }
 
 @media (max-width: 768px) {
