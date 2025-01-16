@@ -64,8 +64,10 @@ public class CitizenController {
     
     @GetMapping("/{citizenId}/vaccination-history")
     public String viewVaccinationHistory(@PathVariable Long citizenId, Model model) {
+        Citizen citizen = citizenService.getCitizenById(citizenId);
         List<Vaccination> vaccinationHistory = vaccinationService.getVaccinationHistoryByCitizenId(citizenId);
         model.addAttribute("vaccinationHistory", vaccinationHistory);
+        model.addAttribute("citizen", citizen);
         return "vaccination-history";
     }
 }
