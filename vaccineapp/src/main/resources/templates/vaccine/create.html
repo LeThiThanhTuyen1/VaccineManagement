@@ -6,9 +6,12 @@
 </head>
 <body id="add-vaccine-page">
 	<div th:replace="~{header}"></div>
-
+	
 	<div class="container">
 		<h2>Thêm Vaccine Mới</h2>
+		<div th:if="${error}" class="alert alert-danger">
+        	<p th:text="${error}"></p>
+   		</div>
 		<form th:action="@{/vaccines/save}" method="post">
 			<div class="form-group">
 				<label for="name">Tên Vaccine:</label> 
@@ -30,7 +33,7 @@
 				<label for="price">Giá:</label>
 				<input type="number" id="price" name="price" />
 			</div>
-			<div class="form-group">s
+			<div class="form-group">
 				<label for="description">Mô tả:</label>
 				<textarea id="description" name="description"></textarea>
 			</div>
@@ -38,7 +41,7 @@
 			 
 			<div>
 				<button type="submit" class="btn-save">Lưu Vaccine</button>
-				<a class="a-edit" th:href="@{/users/manage}">Hủy</a>
+				<a class="a-edit" th:href="@{/vaccines}">Hủy</a>
 			</div>
 		</form>
 	</div>
