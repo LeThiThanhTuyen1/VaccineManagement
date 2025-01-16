@@ -37,4 +37,6 @@ public interface VaccinationRepository extends JpaRepository<Vaccination, Long> 
 	        @Param("vaccineName") String vaccineName,
 	        @Param("vaccinationDate") LocalDate vaccinationDate,
 	        @Param("status") Status status);
+
+	List<Vaccination> findByVaccinationDate(LocalDate vaccinationDate);
 }
