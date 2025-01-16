@@ -23,9 +23,6 @@ public class Citizen {
     @Column(name = "cccd")
     private String cccd;
     
-    @Column(name = "email")
-    private String email;
-    
     @ManyToOne
     @JoinColumn(name = "ward_id")
     private Ward ward;
@@ -61,14 +58,6 @@ public class Citizen {
 
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getFullName() {

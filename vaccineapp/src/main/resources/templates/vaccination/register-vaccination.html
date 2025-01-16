@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Đăng ký tiêm chủng</title>
+<link rel="stylesheet" href="/css/add-manage.css" />
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+
+	<div class="container">
+		<h2>Đăng ký tiêm chủng</h2>
+		<div th:if="${error}" style="color: red;">
+			<p th:text="${error}"></p>
+		</div>
+		<form th:action="@{/vaccinations/register}" method="post">
+    <div class="form-group">
+        <label for="vaccine">Tên vaccine:</label>
+        <select id="vaccine" name="vaccine" required>
+            <option value="">Chọn vaccine</option>
+            <th:block th:each="vc : ${vaccines}">
+                <option th:value="${vc.id}" th:text="${vc.name}"></option>
+            </th:block>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="citizen">Tên công dân:</label>
+        <select id="citizen" name="citizen" required>
+            <option value="">Chọn công dân đăng ký tiêm</option>
+            <th:block th:each="ctz : ${citizens}">
+                <option th:value="${ctz.id}" th:text="${ctz.fullName}"></option>
+            </th:block>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="vaccinationDate">Ngày tiêm:</label>
+        <input type="date" id="vaccinationDate" name="vaccinationDate" required />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn-save">Đăng ký</button>
+        <a class="a-edit" th:href="@{/vaccinations}">Quay lại</a>
+    </div>
+</form>
+	</div>
+
+	<div th:replace="~{footer}"></div>
+</body>
+</html>
+<script>function validateForm() {
+    let isValid = true;
+    let errorMessage = "";
+
+    // Lấy giá trị của các trường vaccine, citizen và vaccinationDate
+    const vaccine = document.getElementById('vaccine').value;
+    const citizen = document.getElementById('citizen').value;
+    const vaccinationDate = document.getElementById('vaccinationDate').value;
+
+    // Kiểm tra vaccine (không được để trống)
+    if (!vaccine) {
+        isValid = false;
+        errorMessage += "Vui lòng chọn vaccine.\n";
+    }
+
+    // Kiểm tra citizen (không được để trống)
+    if (!citizen) {
+        isValid = false;
+        errorMessage += "Vui lòng chọn công dân.\n";
+    }
+
+    // Kiểm tra ngày tiêm (không được để trống và không nhỏ hơn ngày hiện tại)
+    if (!vaccinationDate) {
+        isValid = false;
+        errorMessage += "Vui lòng chọn ngày tiêm.\n";
+    } else {
+        const today = new Date(); // Lấy ngày hiện tại
+        const selectedDate = new Date(vaccinationDate); // Chuyển đổi ngày tiêm từ string sang Date
+
+        // Kiểm tra xem ngày tiêm có nhỏ hơn ngày hiện tại không
+        if (selectedDate < today) {
+            isValid = false;
+            errorMessage += "Ngày tiêm không được nhỏ hơn ngày hiện tại.\n";
+        }
+    }
+
+    // Nếu có lỗi, hiển thị thông báo lỗi
+    if (!isValid) {
+        alert(errorMessage);
+    }
+
+    return isValid; // Trả về true nếu form hợp lệ
+}
+
+// Gắn sự kiện validate khi người dùng submit form
+const form = document.querySelector("form");
+form.addEventListener("submit", function(event) {
+    if (!validateForm()) {
+        event.preventDefault(); // Ngừng gửi form nếu có lỗi
+    }
+});
+</script>

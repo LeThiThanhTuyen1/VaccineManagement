@@ -1,5 +1,6 @@
 package com.example.vaccineapp.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.vaccineapp.models.Citizen;
 import com.example.vaccineapp.models.Vaccination;
 import com.example.vaccineapp.models.Vaccine;
+import com.example.vaccineapp.services.CitizenService;
 import com.example.vaccineapp.services.VaccinationService;
 import com.example.vaccineapp.services.VaccineService;
 
@@ -22,11 +25,13 @@ public class VaccinationController {
 
     private final VaccinationService vaccinationService;
     private final VaccineService vaccineService;
+    private final CitizenService citizenService;
 
     // Constructor-based injection
-    public VaccinationController(VaccinationService vaccinationService, VaccineService vaccineService) {
+    public VaccinationController(VaccinationService vaccinationService, VaccineService vaccineService, CitizenService citizenService) {
         this.vaccinationService = vaccinationService;
         this.vaccineService = vaccineService;
+        this.citizenService = citizenService;
     }
 
     @GetMapping("/vaccinations")
@@ -68,6 +73,31 @@ public class VaccinationController {
         model.addAttribute("status", status);
         return "vaccinations";
     }
+    
+    @GetMapping("/vaccinations/register")
+    public String showRegisterVaccinationPage(Model model) {
+    	List<Vaccine> vaccines = vaccineService.findAll();
+    	model.addAttribute("vaccines", vaccines);
+    	
+    	List<Citizen> citizens = citizenService.findAllCitizens();
+    	model.addAttribute("citizens", citizens);
+    	
+    	return "vaccination/register-vaccination";
+    }
+    
+    @PostMapping("/vaccinations/register")
+    public String registerVaccination(@RequestParam Long citizen, 
+                                       @RequestParam Long vaccine, 
+                                       @RequestParam String vaccinationDate) {
+        // Chuyển đổi String thành LocalDate
+        LocalDate date = LocalDate.parse(vaccinationDate);
+
+        // Gọi phương thức trong service để lưu vào cơ sở dữ liệu
+        vaccinationService.registerVaccination(citizen, vaccine, date);
+
+        return "redirect:/vaccinations"; // Hoặc redirect đến trang khác sau khi thêm thành công
+    }
+
 
     @PostMapping("/updateStatus")
     public String updateVaccinationStatus(

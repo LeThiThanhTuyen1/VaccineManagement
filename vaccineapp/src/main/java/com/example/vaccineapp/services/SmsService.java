@@ -17,7 +17,9 @@ public class SmsService {
 
     @Value("${sms.senderName}")
     private String senderName;
-
+    public SmsService() {
+        // Constructor logic
+    }
     private OkHttpClient client = new OkHttpClient();
 
     public void sendSms(String to, String message) throws IOException {

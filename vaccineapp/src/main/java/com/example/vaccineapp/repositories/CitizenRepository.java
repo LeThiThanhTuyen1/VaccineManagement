@@ -13,7 +13,16 @@ import com.example.vaccineapp.models.Ward;
 @Repository
 public interface CitizenRepository extends JpaRepository<Citizen, Long> {
 	List<Citizen> findByTargetGroup(TargetGroup targetGroup);
-	
-	Optional<Citizen> findCitizenByCccd(String cccd);
+
+	Citizen findCitizenByCccd(String cccd);
+
+	boolean existsByCccd(String cccd);
+
+	boolean existsByPhoneNumber(String phoneNumber);
+
+	boolean existsByCccdAndIdNot(String cccd, Long id);
+
+	boolean existsByPhoneNumberAndIdNot(String phoneNumber, Long id);
+
 	long countByWard(Ward ward);
 }

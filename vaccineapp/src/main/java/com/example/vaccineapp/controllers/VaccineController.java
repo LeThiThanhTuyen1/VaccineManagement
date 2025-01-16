@@ -46,7 +46,6 @@ public class VaccineController {
     	}
     	vaccineService.save(vaccine);
     	return "redirect:/vaccines";
-
     }
 
     // Show form to edit an existing vaccine

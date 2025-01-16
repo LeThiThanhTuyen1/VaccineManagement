@@ -31,6 +31,7 @@
 		<thead>
 			<tr>
 				<th>Họ và tên</th>
+				<th>Số CCCD</th>
 				<th>Ngày sinh</th>
 				<th>Số điện thoại</th>
 				<th>Địa chỉ</th>
@@ -41,17 +42,21 @@
 		<tbody>
 			<tr th:each="citizen : ${citizens}">
 				<td th:text="${citizen.fullName}"></td>
+				<td th:text="${citizen.cccd}"></td>
 				<td th:text="${citizen.dateOfBirth}"></td>
 				<td th:text="${citizen.phoneNumber}"></td>
 				<td th:text="${citizen.getAddress()}"></td>
-				<td th:text="${citizen.targetGroup.displayName}"></td>
+				<td th:text="${citizen?.targetGroup?.displayName}"></td>
 				<td>
 					<!-- Nút xem lịch sử tiêm -->
 					<button class="view-vaccination">
-						<a
-							th:href="@{/citizens/{id}/vaccination-history(id=${citizen.id})}">
+						<a th:href="@{/citizens/{id}/vaccination-history(id=${citizen.id})}">
 							Xem lịch sử tiêm</a>
 					</button>
+					<a th:href="@{/citizens/update/{id}(id=${citizen.id})}" class="btn btn-warning">Cập nhật</a>
+                        <form th:action="@{/citizens/delete/{id}(id=${citizen.id})}" method="post" style="display: inline;">
+                            <button type="submit" style="background-color: red" class="btn btn-danger">Xóa</button>
+                        </form>
 				</td>
 			</tr>
 		</tbody>
@@ -60,3 +65,17 @@
 	<div th:replace="~{footer}"></div>
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Thêm xác nhận trước khi gửi yêu cầu xóa
+        const deleteButtons = document.querySelectorAll('.btn-danger');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                const confirmDelete = confirm('Bạn có chắc chắn muốn xóa công dân này không?');
+                if (!confirmDelete) {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>

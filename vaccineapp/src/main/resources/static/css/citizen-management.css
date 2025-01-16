@@ -14,11 +14,23 @@ h1, h2 {
     border-radius: 5px;
     text-decoration: none;
 }
+.btn.btn-warning {
+	margin-left: 18px;
+	background-color: yellow;
+	padding: 5px 10px;
+	border-radius: 25px;
+}
+
+.btn.btn-danger {
+	background-color: yellow;
+	padding: 5px 10px;
+	border-radius: 25px;
+}
+
 
 .btn.btn-primary:hover {
     background-color: #218838;
 }
-
 
 form {
     margin-left: 20px;
