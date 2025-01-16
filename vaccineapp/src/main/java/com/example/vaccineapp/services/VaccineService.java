@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.vaccineapp.models.Vaccine;
 import com.example.vaccineapp.repositories.VaccineRepository;
-
+ 
 @Service
 public class VaccineService {
 	@Autowired

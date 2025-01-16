@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách lịch tiêm</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/static/js/updateStatus.js"></script>
+</head>
+<body>
+    <h1>Danh sách lịch tiêm</h1>
+
+    <!-- Form lọc -->
+    <form method="get" action="/vaccinations">
+        <label for="vaccineName">Tên vaccine:</label>
+        <select id="vaccineName" name="vaccineName">
+            <option value="" th:text="'Tất cả'" th:selected="${vaccineName == null or vaccineName == ''}">Tất cả</option>
+            <th:block th:each="vaccine : ${vaccines}">
+                <option th:value="${vaccine.name}" th:text="${vaccine.name}" th:selected="${vaccine.name == vaccineName}">
+                    <!-- Tên vaccine -->
+                </option>
+            </th:block>
+        </select>
+        
+        <label for="vaccinationDate">Ngày đăng ký:</label>
+        <input type="date" id="vaccinationDate" name="vaccinationDate" th:value="${vaccinationDate != null ? vaccinationDate : ''}">
+
+        <label for="status">Trạng thái:</label>
+        <select id="status" name="status">
+            <option value="" th:text="'Tất cả'" th:selected="${status == null or status == ''}">Tất cả</option>
+            <option value="PENDING" th:selected="${status == 'PENDING'}">PENDING</option>
+            <option value="COMPLETED" th:selected="${status == 'COMPLETED'}">COMPLETED</option>
+            <option value="CANCELLED" th:selected="${status == 'CANCELLED'}">CANCELLED</option>
+        </select>
+
+        <button type="submit">Lọc</button>
+        <a href="/vaccinations" class="btn-reset">Xóa bộ lọc</a>
+    </form>
+
+    <!-- Hiển thị danh sách lịch tiêm -->
+    <table>
+        <thead>
+            <tr>
+                <th>Tên công dân</th>
+                <th>Tên vaccine</th>
+                <th>Ngày đăng ký</th>
+                <th>Địa điểm</th>
+                <th>Số điện thoại</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vaccination : ${vaccinations}">
+                <td th:text="${vaccination.citizen.fullName}">Tên công dân</td>
+                <td th:text="${vaccination.vaccine.name}">Tên vaccine</td>
+<td th:text="${vaccination.vaccinationDate.toString()}">Ngày đăng ký</td>
+                <td th:text="${vaccination.citizen.phoneNumber}">Số điện thoại</td>
+                <td th:text="${vaccination.status}">Trạng thái</td>
+                <td>
+                    <form method="post" th:action="@{/vaccinations/updateStatus}">
+                        <input type="hidden" name="vaccinationId" th:value="${vaccination.id}" />
+                        <button type="submit" name="action" value="COMPLETED" th:disabled="${vaccination.status == 'PENDING'}">Đã tiêm</button>
+                        <button type="submit" name="action" value="CANCELLED" th:disabled="${vaccination.status == 'PENDING'}">Hủy</button>
+                    </form>
+                    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

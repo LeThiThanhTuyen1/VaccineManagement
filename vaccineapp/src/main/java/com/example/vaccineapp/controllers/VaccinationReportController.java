@@ -31,17 +31,14 @@ public class VaccinationReportController {
         if (endDate == null) {
             endDate = LocalDate.now();  // Giá trị mặc định là ngày hiện tại
         }
+        
         List<VaccinationReportDTO> report = vaccinationReportService.getVaccinationReport(startDate, endDate);
+        
         model.addAttribute("report", report);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
+        
         return "vaccination-report";
     }
    
-    @GetMapping("/vaccination-rate")
-    public String getVaccinationRateByRegion(Model model) {
-        List<VaccinationRateByRegionDTO> report = vaccinationReportService.getVaccinationRateByRegion();
-        model.addAttribute("report", report);
-        return "vaccination-rate";
-    }
 }
