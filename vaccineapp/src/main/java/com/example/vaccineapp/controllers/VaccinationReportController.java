@@ -5,14 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.example.vaccineapp.dto.VaccinationReportDTO;
 import com.example.vaccineapp.services.VaccinationReportService;
 
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import com.example.vaccineapp.dto.VaccinationRateByRegionDTO;
@@ -44,12 +40,8 @@ public class VaccinationReportController {
    
     @GetMapping("/vaccination-rate")
     public String getVaccinationRateByRegion(Model model) {
-        // Lấy danh sách tỷ lệ tiêm chủng theo khu vực
         List<VaccinationRateByRegionDTO> report = vaccinationReportService.getVaccinationRateByRegion();
-        
-        // Thêm danh sách này vào model để hiển thị trên giao diện
         model.addAttribute("report", report);
-        
-        return "vaccination-rate"; // Trả về trang báo cáo tỷ lệ tiêm chủng
+        return "vaccination-rate";
     }
 }

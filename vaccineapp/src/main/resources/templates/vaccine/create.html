@@ -11,25 +11,31 @@
 		<h2>Thêm Vaccine Mới</h2>
 		<form th:action="@{/vaccines/save}" method="post">
 			<div class="form-group">
-				<label for="name">Tên Vaccine:</label> <input type="text" id="name"
-					name="name" required />
+				<label for="name">Tên Vaccine:</label> 
+				<input type="text" id="name" name="name" required />
 			</div>
 			<div class="form-group">
-				<label for="manufacturer">Nhà sản xuất:</label> <input type="text"
-					id="manufacturer" name="manufacturer" />
+				<label for="manufacturer">Nhà sản xuất:</label> 
+				<input type="text" id="manufacturer" name="manufacturer" />
 			</div>
 			<div class="form-group">
-				<label for="expirationDate">Ngày hết hạn:</label> <input type="date"
-					id="expirationDate" name="expirationDate" />
+				<label for="expirationDate">Ngày hết hạn: </label> 
+				<input type="date" id="expirationDate" name="expirationDate" />
 			</div>
 			<div class="form-group">
-				<label for="quantity">Số lượng:</label> <input type="number"
-					id="quantity" name="quantity" />
+				<label for="quantity">Số lượng:</label> 
+				<input type="number" id="quantity" name="quantity" />
 			</div>
 			<div class="form-group">
+				<label for="price">Giá:</label>
+				<input type="number" id="price" name="price" />
+			</div>
+			<div class="form-group">s
 				<label for="description">Mô tả:</label>
 				<textarea id="description" name="description"></textarea>
 			</div>
+			 <input type="hidden" name="status" value="IN_STOCK" />
+			 
 			<div>
 				<button type="submit" class="btn-save">Lưu Vaccine</button>
 				<a class="a-edit" th:href="@{/users/manage}">Hủy</a>

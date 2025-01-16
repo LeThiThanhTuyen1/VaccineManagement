@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Tỷ lệ tiêm chủng</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Vaccination Rate by Region</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h1>Tỷ lệ tiêm chủng theo khu vực</h1>
-
-    <canvas id="vaccinationChart" width="400" height="400"></canvas>
-
-    <script>
-        var ctx = document.getElementById('vaccinationChart').getContext('2d');
-        var chartData = {
-            labels: /*[[${#lists.map(report, 'regionName')}]]*/, // Danh sách tên khu vực
-            datasets: [{
-                label: 'Tỷ lệ tiêm chủng (%)',
-                data: /*[[${#lists.map(report, 'vaccinationRate')}]]*/, // Tỷ lệ tiêm chủng cho từng khu vực
-                backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56', '#4bc0c0', '#9966ff', '#ff9f40'], // Màu sắc từng phần biểu đồ
-            }]
-        };
-
-        var vaccinationChart = new Chart(ctx, {
-            type: 'pie',
-            data: chartData
-        });
-    </script>
+    <h1>Vaccination Rate by Region</h1>
+    
+    <h2>Report Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Total Citizens</th>
+                <th>Vaccinated Citizens</th>
+                <th>Vaccination Rate (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reportItem : ${report}">
+                <td th:text="${reportItem.regionName}">Region</td>
+                <td th:text="${reportItem.totalCitizens}">Total Citizens</td>
+                <td th:text="${reportItem.vaccinatedCitizens}">Vaccinated Citizens</td>
+                <td th:text="${reportItem.vaccinationRate}">Vaccination Rate</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
