@@ -11,10 +11,10 @@
     
     <form method="get" action="/reports/vaccination-report">
         <label for="startDate">Ngày bắt đầu:</label>
-        <input type="date" id="startDate" name="startDate">
+        <input type="date" id="startDate" name="startDate" th:value="${startDate}">
         
         <label for="endDate">Ngày kết thúc:</label>
-        <input type="date" id="endDate" name="endDate">
+        <input type="date" id="endDate" name="endDate" th:value="${endDate}">
         
         <button type="submit">Tạo báo cáo</button>
     </form>
@@ -28,6 +28,7 @@
                 <th>Tổng số mũi tiêm</th>
                 <th>Thành công</th>
                 <th>Thất bại</th>
+                <th>Chưa tiêm</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
                 <td th:text="${reportItem.totalVaccinations}">Tổng</td>
                 <td th:text="${reportItem.successfulVaccinations}">Thành công</td>
                 <td th:text="${reportItem.failedVaccinations}">Thất bại</td>
+                <td th:text="${reportItem.pendingVaccinations}">Chưa tiêm</td>
             </tr>
         </tbody>
     </table>

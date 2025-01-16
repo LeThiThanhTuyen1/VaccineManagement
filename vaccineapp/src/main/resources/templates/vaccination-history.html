@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lịch sử tiêm chủng</title>
+    <link rel="stylesheet" href="/css/vaccination-history.css}" />
+</head>
+<body>
+    <div th:replace="~{header}"></div>
+
+    <h1>Lịch sử tiêm chủng</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Vaccine</th>
+                <th>Ngày tiêm</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vaccination : ${vaccinationHistory}">
+                <td th:text="${vaccination.vaccine.name}"></td>
+                <td th:text="${vaccination.vaccinationDate}"></td>
+                <td th:text="${vaccination.status.displayName}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/citizens/management}">Quay lại danh sách công dân</a>
+
+    <div th:replace="~{footer}"></div>
+</body>
+</html>

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "vaccinations")
-public class Vaccinations {
+public class Vaccination {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Vaccinations {
     public enum Status {
     	PENDING("CHƯA HOÀN THÀNH"),
         COMPLETED("ĐÃ TIÊM"),
-        CANCELED("ĐÃ HỦY");
+        CANCELLED("ĐÃ HỦY");
     	
     	private final String displayName;
 
