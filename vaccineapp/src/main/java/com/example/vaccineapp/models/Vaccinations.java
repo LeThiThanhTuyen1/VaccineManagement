@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vaccination_history")
-public class VaccinationHistory {
+@Table(name = "vaccinations")
+public class Vaccinations {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,24 +22,10 @@ public class VaccinationHistory {
     @Column(name = "vaccination_date", nullable = false)
     private LocalDate vaccinationDate;
 
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private Status status;
-
-    public enum Status {
-        COMPLETED("ĐÃ TIÊM"),
-        MISSED("CHƯA TIÊM");
-    	
-    	private final String displayName;
-
-        Status(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
+    private VaccinationStatus status = VaccinationStatus.PENDING;
 
     // Getters and Setters
     public Long getId() {
@@ -74,11 +60,11 @@ public class VaccinationHistory {
         this.vaccinationDate = vaccinationDate;
     }
 
-    public Status getStatus() {
+    public VaccinationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(VaccinationStatus status) {
         this.status = status;
     }
 }
