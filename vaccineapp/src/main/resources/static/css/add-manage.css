@@ -37,6 +37,12 @@ h2 {
 	margin-right: auto;	
 }
 
+.alert-danger {
+	color: red;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
 .form-group input,
 .form-group select {
     width: 100%;
