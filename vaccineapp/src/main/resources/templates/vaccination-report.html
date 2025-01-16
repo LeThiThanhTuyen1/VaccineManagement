@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Báo cáo tiêm chủng</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+	
+    <h1>Báo cáo tiêm chủng</h1>
+    
+    <form method="get" action="/reports/vaccination-report">
+        <label for="startDate">Ngày bắt đầu:</label>
+        <input type="date" id="startDate" name="startDate">
+        
+        <label for="endDate">Ngày kết thúc:</label>
+        <input type="date" id="endDate" name="endDate">
+        
+        <button type="submit">Tạo báo cáo</button>
+    </form>
+    
+    <h2>Dữ liệu báo cáo</h2>
+    <div class="report">
+    	<table>
+        <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Tổng số mũi tiêm</th>
+                <th>Thành công</th>
+                <th>Thất bại</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reportItem : ${report}">
+                <td th:text="${reportItem.date}">Ngày</td>
+                <td th:text="${reportItem.totalVaccinations}">Tổng</td>
+                <td th:text="${reportItem.successfulVaccinations}">Thành công</td>
+                <td th:text="${reportItem.failedVaccinations}">Thất bại</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    
+    <div th:replace="~{footer}"></div>
+</body>
+</html>
