@@ -23,10 +23,22 @@ input, select {
 
 button {
     padding: 5px 10px;
+    border-radius: 5px;
+    padding: 6px 15px;
+    margin-left: 10px;
+    border: 1px solid black;
     background-color: #0080ff;
     color: white;
-    border: none;
     cursor: pointer;
+}
+
+.btn-warning {
+	background:  #ffff80;
+	color: black;
+}
+
+.btn-warning:hover {
+	background:  #ffff00
 }
 
 button:hover {
@@ -43,6 +55,11 @@ table {
 
 table, th, td {
     border: 1px solid black;
+}
+
+.alert-success {
+	color: red;
+	margin-left: 20px;
 }
 
 th, td {
