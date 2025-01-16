@@ -33,7 +33,7 @@ public class VaccinationController {
     public String getRegistrations(
             @RequestParam(required = false) String vaccineName,
             @RequestParam(required = false) String vaccinationDate,
-            @RequestParam(required = false, defaultValue = "PENDING") String status,
+            @RequestParam(required = false) String status,
             Model model) {
 
         // Get full vaccination list

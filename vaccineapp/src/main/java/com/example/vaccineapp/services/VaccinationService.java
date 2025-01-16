@@ -54,4 +54,5 @@ public class VaccinationService {
         vaccination.setStatus(newStatus);
         vaccinationRepository.save(vaccination);
     }
+    
 }

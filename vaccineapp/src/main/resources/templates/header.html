@@ -7,35 +7,36 @@
 <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
-	<header>
-		<div class="header-top">
-			<div class="logo">
-				<img src="/img/logo.png" alt="Logo" class="logo-image"> <span
-					class="system-name">QUẢN LÝ TIÊM CHỦNG</span>
-			</div>
-		</div>
-
-		<nav class="menu-bar">
-			<ul th:if="${isManager}" class="menu">
-				<li><a href="/vaccination-history/search">Tra cứu</a></li>
-				<li><a href="/citizens/management">Nhóm đối tượng</a></li>
-				<li><a href="/locations/provinces">Địa điểm</a></li>
-				<li><a href="/vaccinations">Lịch tiêm</a></li>
-			</ul>
-
-			<ul th:if="${isAdmin}" class="menu">
-				<li><a href="/citizens/management">Nhóm đối tượng</a></li>
-				<li><a href="/users/manage">Tài khoản</a></li>
-				<li><a href="/vaccines">Vắc xin</a></li>
-				<li><a href="/reports/vaccination-report">Báo cáo tiêm
-						chủng</a></li>
-				<li><a href="/reports/vaccination-rate">Thống kê</a></li>
-			</ul>
-
-			<div class="logout">
-				<a href="/logout">Đăng xuất</a>
-			</div>
-		</nav>
-	</header>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <img src="/img/logo.png" alt="Logo" class="logo-image">
+                <span class="system-name">QUẢN LÝ TIÊM CHỦNG</span>
+            </div>
+        </div>
+        
+        <nav class="menu-bar">
+            <ul th:if="${isManager}" class="menu">
+                <li><a href="/introduce">Giới thiệu</a></li>
+                <li><a href="/vaccination-handbook">Cẩm nang</a></li>
+                <li><a href="/citizens/management">Nhóm đối tượng</a></li>
+                <li><a href="/locations/provinces">Địa điểm</a></li>
+                <li><a href="/vaccinations">Lịch tiêm</a></li>
+            </ul>
+            
+            <ul th:if="${isAdmin}" class="menu">
+            	<li><a href="/introduce">Giới thiệu</a></li>
+            	<li><a href="/vaccination-handbook">Cẩm nang</a></li>
+                <li><a href="/users/manage">Tài khoản</a></li>
+                <li><a href="/vaccines">Vắc xin</a></li>
+                <li><a href="/reports/vaccination-report">Báo cáo tiêm chủng</a></li>
+                <li><a href="/reports/vaccination-rate">Thống kê</a></li>
+            </ul>
+            
+            <div class="logout">
+                <a href="/logout">Đăng xuất</a>
+            </div>
+        </nav>
+    </header>
 </body>
 </html>

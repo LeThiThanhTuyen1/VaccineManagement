@@ -13,12 +13,9 @@
 		<button type="submit">Đăng nhập</button>
 
 		<!-- Hiển thị thông báo lỗi -->
-		<div th:if="${param.error}" style="color: red;">Tên đăng nhập
+		<div th:if="${param.error}" style="color: red; margin-top: 10px;">Tên đăng nhập
 			hoặc mật khẩu không đúng.</div>
 			
-		<!-- Hiển thị thông báo đăng xuất thành công -->
-		<div th:if="${param.logout}" style="color: green;">Đăng xuất
-			thành công.</div>
 	</form>
 </body>
 </html>

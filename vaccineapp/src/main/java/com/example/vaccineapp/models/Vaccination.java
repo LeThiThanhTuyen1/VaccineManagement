@@ -27,9 +27,9 @@ public class Vaccination {
     private Status status;
 
     public enum Status {
-    	PENDING("CHƯA HOÀN THÀNH"),
-        COMPLETED("ĐÃ TIÊM"),
-        CANCELLED("ĐÃ HỦY");
+    	PENDING("Chờ xử lý"),
+        COMPLETED("Đã tiêm"),
+        CANCELLED("Đã hủy");
     	
     	private final String displayName;
 
