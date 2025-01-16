@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vaccination_history")
-public class VaccinationHistory {
+@Table(name = "vaccinations")
+public class Vaccinations {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,9 @@ public class VaccinationHistory {
     private Status status;
 
     public enum Status {
+    	PENDING("CHƯA HOÀN THÀNH"),
         COMPLETED("ĐÃ TIÊM"),
-        MISSED("CHƯA TIÊM");
+        CANCELED("ĐÃ HỦY");
     	
     	private final String displayName;
 

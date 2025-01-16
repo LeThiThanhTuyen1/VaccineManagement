@@ -80,10 +80,10 @@ INSERT INTO wards (name, district_id) VALUES
 ('Phường Phạm Ngũ Lão', 4), -- Quận 3
 ('Phường Hòa Hải', 5);    -- Ngũ Hành Sơn
 
-INSERT INTO vaccines (name, manufacturer, expiration_date, quantity, description) VALUES
-('Pfizer', 'Pfizer Inc.', '2025-12-31', 1000, 'Vắc xin phòng COVID-19'),
-('AstraZeneca', 'AstraZeneca', '2024-11-30', 800, 'Vắc xin phòng COVID-19'),
-('Moderna', 'Moderna', '2025-06-15', 1200, 'Vắc xin phòng COVID-19');
+INSERT INTO vaccines (name, manufacturer, expiration_date, quantity, price, status , description) VALUES
+('Pfizer', 'Pfizer Inc.', '2025-12-31', 1000, 10000, 'IN_STOCK', 'Vắc xin phòng COVID-19'),
+('AstraZeneca', 'AstraZeneca', '2024-11-30', 800, 123121, 'IN_STOCK', 'Vắc xin phòng COVID-19'),
+('Moderna', 'Moderna', '2025-06-15', 1200, 900000, 'IN_STOCK', 'Vắc xin phòng COVID-19');
 
 INSERT INTO citizens (full_name, date_of_birth, phone_number, ward_id, address_detail, target_group) 
 VALUES 

@@ -1,7 +1,7 @@
 package com.example.vaccineapp.controllers;
 
-import com.example.vaccineapp.models.VaccinationHistory;
-import com.example.vaccineapp.repositories.VaccinationHistoryRepository;
+import com.example.vaccineapp.models.Vaccinations;
+import com.example.vaccineapp.repositories.VaccinationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,10 +15,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("")
-public class VaccinationHistoryController {
+public class VaccinationsController {
 
     @Autowired
-    private VaccinationHistoryRepository vaccinationHistoryRepository;
+    private VaccinationsRepository vaccinationHistoryRepository;
 
     @GetMapping("/vaccination-history/search")
     public String searchVaccinationHistory(
@@ -33,7 +33,7 @@ public class VaccinationHistoryController {
         name = (name == null ? "" : name.trim());
         phone = (phone == null ? "" : phone.trim());
 
-        List<VaccinationHistory> histories = vaccinationHistoryRepository.findDetailedVaccinationHistory(name, phone);
+        List<Vaccinations> histories = vaccinationHistoryRepository.findDetailedVaccinationHistory(name, phone);
 
         if (histories.isEmpty()) {
             model.addAttribute("error", "Không tìm thấy kết quả phù hợp với thông tin tìm kiếm.");
