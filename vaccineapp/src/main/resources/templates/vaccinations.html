@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách lịch tiêm</title>
-    <link rel="stylesheet" href="/css/citizen-management.css">
+    <link rel="stylesheet" href="/css/vaccinations.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="/js/updateStatus.js"></script>
 </head>
 <body>
@@ -12,34 +14,40 @@
     <h1>Danh sách lịch tiêm</h1>
     <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
     <!-- Form lọc -->
-    <form method="get" action="/vaccinations">
-        <label for="vaccineName">Tên vaccine:</label>
-        <select id="vaccineName" name="vaccineName">
-            <option value="" th:text="'Tất cả'" th:selected="${vaccineName == null or vaccineName == ''}">Tất cả</option>
-            <th:block th:each="vaccine : ${vaccines}">
-                <option th:value="${vaccine.name}" th:text="${vaccine.name}" th:selected="${vaccine.name == vaccineName}">
-                    <!-- Tên vaccine -->
-                </option>
-            </th:block>
-        </select>
-        
-        <label for="vaccinationDate">Ngày đăng ký:</label>
-        <input type="date" id="vaccinationDate" name="vaccinationDate" th:value="${vaccinationDate != null ? vaccinationDate : ''}">
+    <form method="get" action="/vaccinations" class="row g-3 mb-4">
+	    <div class="col-md-4">
+	        <label for="vaccineName" class="form-label">Tên vaccine:</label>
+	        <select id="vaccineName" name="vaccineName" class="form-select">
+	            <option value="" th:text="'Tất cả'" th:selected="${vaccineName == null or vaccineName == ''}">Tất cả</option>
+	            <th:block th:each="vaccine : ${vaccines}">
+	                <option th:value="${vaccine.name}" th:text="${vaccine.name}" th:selected="${vaccine.name == vaccineName}">
+	                    <!-- Tên vaccine -->
+	                </option>
+	            </th:block>
+	        </select>
+	    </div>
+	    <div class="col-md-4">
+	        <label for="vaccinationDate" class="form-label">Ngày đăng ký:</label>
+	        <input type="date" id="vaccinationDate" name="vaccinationDate" class="form-control" th:value="${vaccinationDate != null ? vaccinationDate : ''}">
+	    </div>
+	    <div class="col-md-4">
+	        <label for="status" class="form-label">Trạng thái:</label>
+	        <select id="status" name="status" class="form-select">
+	            <option value="" th:text="'Tất cả'" th:selected="${status == null or status == ''}">Tất cả</option>
+	            <option value="PENDING" th:selected="${status == 'PENDING'}">Chờ xử lý</option>
+	            <option value="COMPLETED" th:selected="${status == 'COMPLETED'}">Đã tiêm</option>
+	            <option value="CANCELLED" th:selected="${status == 'CANCELLED'}">Đã hủy</option>
+	        </select>
+	    </div>
+	    <div class="col-12 d-flex justify-content-end">
+	        <button type="submit" class="btn btn-primary me-2">Lọc</button>
+	        <a href="/vaccinations" class="btn btn-secondary">Xóa bộ lọc</a>
+	    </div>
+	</form>
 
-        <label for="status">Trạng thái:</label>
-        <select id="status" name="status">
-            <option value="" th:text="'Tất cả'" th:selected="${status == null or status == ''}">Tất cả</option>
-            <option value="PENDING" th:selected="${status == 'PENDING'}">Chờ xử lý</option>
-            <option value="COMPLETED" th:selected="${status == 'COMPLETED'}">Đã tiêm</option>
-            <option value="CANCELLED" th:selected="${status == 'CANCELLED'}">Đã hủy</option>
-        </select>
-
-        <button type="submit">Lọc</button>
-        <a href="/vaccinations" class="btn-reset">Xóa bộ lọc</a>
-    </form>
     <!-- Hiển thị danh sách lịch tiêm -->
-		<table>
-		    <thead>
+		<table class="table table-striped table-bordered">
+		    <thead class="table-dark">
 		        <tr>
 		            <th>Tên công dân</th>
 		            <th>Tên vaccine</th>
@@ -55,20 +63,19 @@
 		            <td th:text="${vaccination.vaccine.name}">Tên vaccine</td>
 		            <td th:text="${vaccination.vaccinationDate.toString()}">Ngày đăng ký</td>
 		            <td th:text="${vaccination.citizen.phoneNumber}">Số điện thoại</td>
-		            <td th:text="${vaccination.status.getDisplayName()}">Trạng thái</td>
+		            <td th:text="${vaccination.status.getDisplayName()}" class="fw-bold text-uppercase">
+		                <!-- Trạng thái -->
+		            </td>
 		            <td>
-					    <form method="post" th:action="@{/updateStatus}">
-					        <input type="hidden" name="vaccinationId" th:value="${vaccination.id}" />
-					        <!-- Hiển thị các nút khi trạng thái là PENDING -->
-					        <div th:if="${vaccination.status.name() == 'PENDING'}">
-							    <button type="submit" class="btn btn-warning" name="action" value="COMPLETED">Đã tiêm</button>
-							    <button type="submit" class="btn btn-danger" name="action" value="CANCELLED">Hủy</button>
-							</div>
-					    </form>
-					</td>
-		        </tr>s
+		                <form method="post" th:action="@{/updateStatus}" class="d-flex gap-2">
+		                    <input type="hidden" name="vaccinationId" th:value="${vaccination.id}" />
+		                    <button type="submit" class="btn btn-success btn-sm" name="action" value="COMPLETED" th:if="${vaccination.status.name() == 'PENDING'}">Đã tiêm</button>
+		                    <button type="submit" class="btn btn-danger btn-sm" name="action" value="CANCELLED" th:if="${vaccination.status.name() == 'PENDING'}">Hủy</button>
+		                </form>
+		            </td>
+		        </tr>
 		        <tr th:if="${#lists.isEmpty(vaccinations)}">
-		            <td colspan="6" style="text-align:center;">Không có lịch tiêm nào phù hợp với bộ lọc</td>
+		            <td colspan="6" class="text-center">Không có lịch tiêm nào phù hợp với bộ lọc</td>
 		        </tr>
 		    </tbody>
 		</table>

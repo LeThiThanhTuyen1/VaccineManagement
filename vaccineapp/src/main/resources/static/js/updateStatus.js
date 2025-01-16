@@ -16,3 +16,13 @@ function updateStatus(vaccinationId, status) {
         }
     });
 }
+// Thêm hiệu ứng thông báo khi trạng thái được cập nhật
+document.addEventListener('DOMContentLoaded', function () {
+    const alertBox = document.querySelector('.alert');
+    if (alertBox) {
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+        }, 3000); // Ẩn thông báo sau 3 giây
+    }
+});
+
