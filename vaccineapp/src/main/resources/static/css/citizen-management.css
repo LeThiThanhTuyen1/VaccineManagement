@@ -37,6 +37,7 @@ table {
     margin-left: 20px;
     margin-right: 20px;
     width: 95%;
+    font-size: 15px;
     border-collapse: collapse;
 }
 
@@ -45,6 +46,28 @@ table, th, td {
 }
 
 th, td {
-    padding: 10px;
+    padding: 5px;
     text-align: left;
+}
+
+.view-vaccination {
+	background-color: #ffff80!important;
+	padding: 5px 10px;
+	color: black!important;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+a {
+	text-decoration: none;
+}
+
+.view-vaccination:hover {
+	background-color: #ffff00;
+}
+
+.callback {
+	color: blue;
+	text-align: center;
+	margin-top: 20px;
 }

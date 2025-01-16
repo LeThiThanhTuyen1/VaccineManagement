@@ -14,7 +14,13 @@ import com.example.vaccineapp.repositories.CitizenRepository;
 public class CitizenService {
     @Autowired
     private CitizenRepository citizenRepository;
-
+    
+    public Citizen getCitizenById(Long citizenId) {
+        // Tìm công dân theo ID hoặc ném ngoại lệ nếu không tìm thấy
+        return citizenRepository.findById(citizenId)
+                .orElseThrow(() -> new RuntimeException("Công dân không tồn tại"));
+    }
+    
     public List<Citizen> getAllCitizens() {
         return citizenRepository.findAll();
     }
