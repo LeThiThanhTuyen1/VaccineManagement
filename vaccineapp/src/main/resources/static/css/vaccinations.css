@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.filter-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.filter-form label {
+    margin-right: 5px;
+}
+
+.filter-form select, .filter-form input {
+    padding: 5px;
+}
+
+.filter-form button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-form button:hover {
+    background-color: #45a049;
+}
+
+.registration-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.registration-table th, .registration-table td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.registration-table th {
+    background-color: #f2f2f2;
+}
+
+.registration-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.registration-table tr:hover {
+    background-color: #ddd;
+}
+
+.registration-table td {
+    text-align: center;
+}

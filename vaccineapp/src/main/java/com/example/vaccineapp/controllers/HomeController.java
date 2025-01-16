@@ -15,7 +15,6 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public String showLoginForm() {
-	    System.out.println("Rendering login page");
 	    return "login";
 	}
 	

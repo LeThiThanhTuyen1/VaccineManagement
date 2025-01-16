@@ -35,7 +35,7 @@ public class Citizen {
     private TargetGroup targetGroup;
     
     @Transient
-	private List<VaccinationHistory> vaccinationHistory;
+	private List<Vaccination> vaccinationHistory;
 
     public Citizen() {
 		// TODO Auto-generated constructor stub
@@ -97,11 +97,11 @@ public class Citizen {
 		this.addressDetail = addressDetail;
 	}
 	
-	public List<VaccinationHistory> getVaccinationHistory() {
+	public List<Vaccination> getVaccinationHistory() {
 	    return vaccinationHistory;
 	}
 
-	public void setVaccinationHistory(List<VaccinationHistory> vaccinationHistory) {
+	public void setVaccinationHistory(List<Vaccination> vaccinationHistory) {
 	    this.vaccinationHistory = vaccinationHistory;
 	}
 	

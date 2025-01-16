@@ -34,6 +34,7 @@
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
                 <th>Nhóm đối tượng</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,13 @@
                 <td th:text="${citizen.phoneNumber}"></td>
                 <td th:text="${citizen.getAddress()}"></td>
                 <td th:text="${citizen.targetGroup.displayName}"></td>
+            	<td>
+                    <!-- Nút xem lịch sử tiêm -->
+                    <button class="view-vaccination">
+                    	<a th:href="@{/citizens/{id}/vaccination-history(id=${citizen.id})}">
+                    		Xem lịch sử tiêm</a>
+                   	</button>
+                </td>
             </tr>
         </tbody>
     </table>

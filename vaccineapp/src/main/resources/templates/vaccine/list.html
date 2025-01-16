@@ -18,6 +18,8 @@
                     <th>Nhà sản xuất</th>
                     <th>Ngày hết hạn</th>
                     <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
                     <th>Mô tả</th>
                     <th>Hành động</th>
                 </tr>
@@ -28,6 +30,8 @@
                     <td th:text="${vaccine.manufacturer}"></td>
                     <td th:text="${vaccine.expirationDate}"></td>
                     <td th:text="${vaccine.quantity}"></td>
+                    <td th:text="${vaccine.price}"></td>                    
+                    <td th:text="${vaccine.status.displayName}"></td>
                     <td th:text="${vaccine.description}"></td>
                     <td>
                         <a th:href="@{/vaccines/edit/{id}(id=${vaccine.id})}" class="btn btn-warning">Sửa</a>

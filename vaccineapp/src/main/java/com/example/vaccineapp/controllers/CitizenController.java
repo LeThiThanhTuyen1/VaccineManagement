@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.vaccineapp.models.Citizen;
 import com.example.vaccineapp.models.Citizen.TargetGroup;
+import com.example.vaccineapp.models.Vaccination;
 import com.example.vaccineapp.services.CitizenService;
+import com.example.vaccineapp.services.VaccinationService;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,6 +30,9 @@ public class CitizenController {
     
 	@Autowired
     private CitizenService citizenService;
+	
+	@Autowired
+    private VaccinationService vaccinationService;
 
     @GetMapping("/target-group/{group}")
     public ResponseEntity<List<Citizen>> getCitizensByTargetGroup(@PathVariable("group") TargetGroup targetGroup) {
@@ -34,7 +40,6 @@ public class CitizenController {
         System.out.println("Citizens: " + citizens); 
         return new ResponseEntity<>(citizens, HttpStatus.OK);
     }
-    
     
     @GetMapping("/management")
     public String showCitizenManagementPage(@RequestParam(value = "group", required = false) String group, Model model) {
@@ -55,5 +60,14 @@ public class CitizenController {
         model.addAttribute("citizens", citizens);
         model.addAttribute("targetGroups", TargetGroup.values());
         return "citizen-management";
+    }
+    
+    @GetMapping("/{citizenId}/vaccination-history")
+    public String viewVaccinationHistory(@PathVariable Long citizenId, Model model) {
+        Citizen citizen = citizenService.getCitizenById(citizenId);
+        List<Vaccination> vaccinationHistory = vaccinationService.getVaccinationHistoryByCitizenId(citizenId);
+        model.addAttribute("vaccinationHistory", vaccinationHistory);
+        model.addAttribute("citizen", citizen);
+        return "vaccination-history";
     }
 }

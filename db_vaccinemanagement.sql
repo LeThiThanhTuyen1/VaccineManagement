@@ -29,7 +29,7 @@ CREATE TABLE citizens (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,    -- Họ tên công dân
     date_of_birth DATE,                 -- Ngày sinh
-    phone_number VARCHAR(20),           -- Số điện thoại
+    phone_number VARCHAR(20) unique,           -- Số điện thoại
     ward_id BIGINT,                     -- Mã xã/phường
     address_detail VARCHAR(255),        -- Địa chỉ chi tiết (nhà số, đường, v.v.)
     target_group ENUM('CHILD', 'ELDERLY', 'PREGNANT_WOMEN', 'OTHER') DEFAULT 'OTHER', -- Nhóm đối tượng
@@ -41,25 +41,16 @@ CREATE TABLE vaccines (
     manufacturer VARCHAR(255),         -- Nhà sản xuất
     expiration_date DATE,              -- Ngày hết hạn
     quantity INT,                      -- Số lượng vắc xin còn lại
+    price BIGINT(10),            	   -- Giá vắc xin
+    status  ENUM('IN_STOCK', 'EXPIRATION') DEFAULT 'IN_STOCK', -- trạng thái kho vắc xin
     description TEXT                   -- Mô tả chi tiết vắc xin
 );
-CREATE TABLE registrations (
+CREATE TABLE vaccinations (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     citizen_id BIGINT,                  -- Mã công dân
     vaccine_id BIGINT,                  -- Mã vắc xin
-    registration_date DATE,             -- Ngày đăng ký
     vaccination_date DATE,              -- Ngày dự kiến tiêm
-    location VARCHAR(255),              -- Địa điểm tiêm
     status ENUM('PENDING', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING', -- Trạng thái tiêm chủng
-    FOREIGN KEY (citizen_id) REFERENCES citizens(id),
-    FOREIGN KEY (vaccine_id) REFERENCES vaccines(id)
-);
-CREATE TABLE vaccination_history (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    citizen_id BIGINT,                  -- Mã công dân
-    vaccine_id BIGINT,                  -- Mã vắc xin
-    vaccination_date DATE,              -- Ngày đã tiêm
-    status ENUM('COMPLETED', 'MISSED') DEFAULT 'COMPLETED', -- Trạng thái tiêm
     FOREIGN KEY (citizen_id) REFERENCES citizens(id),
     FOREIGN KEY (vaccine_id) REFERENCES vaccines(id)
 );
@@ -89,10 +80,10 @@ INSERT INTO wards (name, district_id) VALUES
 ('Phường Phạm Ngũ Lão', 4), -- Quận 3
 ('Phường Hòa Hải', 5);    -- Ngũ Hành Sơn
 
-INSERT INTO vaccines (name, manufacturer, expiration_date, quantity, description) VALUES
-('Pfizer', 'Pfizer Inc.', '2025-12-31', 1000, 'Vắc xin phòng COVID-19'),
-('AstraZeneca', 'AstraZeneca', '2024-11-30', 800, 'Vắc xin phòng COVID-19'),
-('Moderna', 'Moderna', '2025-06-15', 1200, 'Vắc xin phòng COVID-19');
+INSERT INTO vaccines (name, manufacturer, expiration_date, quantity, price, status , description) VALUES
+('Pfizer', 'Pfizer Inc.', '2025-12-31', 1000, 10000, 'IN_STOCK', 'Vắc xin phòng COVID-19'),
+('AstraZeneca', 'AstraZeneca', '2024-11-30', 800, 123121, 'IN_STOCK', 'Vắc xin phòng COVID-19'),
+('Moderna', 'Moderna', '2025-06-15', 1200, 900000, 'IN_STOCK', 'Vắc xin phòng COVID-19');
 
 INSERT INTO citizens (full_name, date_of_birth, phone_number, ward_id, address_detail, target_group) 
 VALUES 
@@ -100,10 +91,7 @@ VALUES
 ('Trần Thị B', '1990-08-15', '0987654321', 2, 'Số 54, Đường Nguyễn Trãi', 'ELDERLY'),
 ('Phạm Văn C', '2005-11-10', '0922334455', 3, 'Số 45/6/1 Đường Lê Lợi', 'CHILD');
 
-INSERT INTO registrations (citizen_id, vaccine_id, registration_date, vaccination_date, location, status) VALUES
-(1, 1, '2024-12-01', '2024-12-10', 'Trung tâm y tế Ba Đình', 'PENDING'),
-(2, 2, '2024-12-05', '2024-12-12', 'Trung tâm y tế Hoàn Kiếm', 'PENDING');
+INSERT INTO vaccinations (citizen_id, vaccine_id, vaccination_date, status) VALUES
+(1, 1, '2024-12-10', 'PENDING'),
+(2, 2, '2024-12-12', 'PENDING');
 
-INSERT INTO vaccination_history (citizen_id, vaccine_id, vaccination_date, status) VALUES
-(1, 1, '2024-12-10', 'COMPLETED'),
-(2, 2, '2024-12-12', 'COMPLETED');
