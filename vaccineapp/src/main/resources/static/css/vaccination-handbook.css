@@ -1,5 +1,4 @@
-
-      * {
+* {
     box-sizing: border-box;
 }
 
@@ -7,26 +6,22 @@ body {
     font-family: Arial, sans-serif;
     background-color: #ffffff; /* Nền trắng cho toàn bộ trang */
     color: #333;
-    line-height: 1.2;
-    margin-bottom: 40px; /* Tạo khoảng cách giữa body và footer */
-    letter-spacing: 0.5px; /* Khoảng cách chữ đều nhau */
 }
 
 header {
     text-align: center;
-    padding: 20px 0;
     background-color: #ffffff; /* Nền trắng cho header */
-    letter-spacing: 0.5px; /* Khoảng cách chữ đều nhau cho header */
 }
 
 h1 {
+	margin-top: 20px;
     font-size: 2rem;
     letter-spacing: 1px; /* Tăng khoảng cách chữ cho tiêu đề */
 }
 
 .content {
     padding: 20px;
-    margin: 20px;
+    margin: 20px auto;
     background-color: #ffffff; /* Nền trắng cho nội dung */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px; /* Tạo khoảng cách giữa content và footer */
@@ -35,25 +30,17 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    margin-bottom: 10px;
     letter-spacing: 0.5px; /* Khoảng cách chữ cho h2 */
+	margin-top: 20px;
 }
 
 h3 {
     font-size: 1.5rem;
-    margin-top: 20px;
     letter-spacing: 0.5px; /* Khoảng cách chữ cho h3 */
 }
 
 ul {
     list-style-type: none;
-    padding-left: 20px;
-    letter-spacing: 0.5px; /* Khoảng cách chữ cho danh sách */
-}
-
-ul li {
-    padding: 5px 0;
-    letter-spacing: 0.5px; /* Khoảng cách chữ cho mỗi mục danh sách */
 }
 
 table {

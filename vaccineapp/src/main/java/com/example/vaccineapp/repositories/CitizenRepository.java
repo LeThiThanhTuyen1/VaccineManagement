@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.example.vaccineapp.models.Citizen;
 import com.example.vaccineapp.models.Citizen.TargetGroup;
+import com.example.vaccineapp.models.Ward;
 
 @Repository
 public interface CitizenRepository extends JpaRepository<Citizen, Long> {
 	List<Citizen> findByTargetGroup(TargetGroup targetGroup);
+	
+	long countByWard(Ward ward);
 }
