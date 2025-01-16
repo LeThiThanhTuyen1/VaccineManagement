@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách lịch tiêm</title>
-<<<<<<< Updated upstream
-    <link rel="stylesheet" href="/css/css">
-=======
     <link rel="stylesheet" href="/css/citizen-management.css">
->>>>>>> Stashed changes
-    <script src="/static/js/updateStatus.js"></script>
+    <script src="/js/updateStatus.js"></script>
 </head>
 <body>
+	<div th:replace="~{header}"></div>
     <h1>Danh sách lịch tiêm</h1>
-
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
     <!-- Form lọc -->
     <form method="get" action="/vaccinations">
         <label for="vaccineName">Tên vaccine:</label>
@@ -60,21 +57,21 @@
 		            <td th:text="${vaccination.citizen.phoneNumber}">Số điện thoại</td>
 		            <td th:text="${vaccination.status.getDisplayName()}">Trạng thái</td>
 		            <td>
-		                <form method="post" th:action="@{/updateStatus}">
-		                    <input type="hidden" name="vaccinationId" th:value="${vaccination.id}" />
-		                    <button type="submit" name="action" value="COMPLETED" 
-		                    	th:disabled="${vaccination.status.getDisplayName() == 'COMPLETED'}">Đã tiêm</button>
-		                    <button type="submit" name="action" value="CANCELLED" 
-		                    	th:disabled="${vaccination.status == 'COMPLETED'}">Hủy</button>
-		                </form>
-		            </td>
-		        </tr>
-		       <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+					    <form method="post" th:action="@{/updateStatus}">
+					        <input type="hidden" name="vaccinationId" th:value="${vaccination.id}" />
+					        <!-- Hiển thị các nút khi trạng thái là PENDING -->
+					        <div th:if="${vaccination.status.name() == 'PENDING'}">
+							    <button type="submit" class="btn btn-warning" name="action" value="COMPLETED">Đã tiêm</button>
+							    <button type="submit" class="btn btn-danger" name="action" value="CANCELLED">Hủy</button>
+							</div>
+					    </form>
+					</td>
+		        </tr>s
 		        <tr th:if="${#lists.isEmpty(vaccinations)}">
 		            <td colspan="6" style="text-align:center;">Không có lịch tiêm nào phù hợp với bộ lọc</td>
 		        </tr>
 		    </tbody>
 		</table>
-
+	<div th:replace="~{footer}"></div>
 </body>
 </html>
