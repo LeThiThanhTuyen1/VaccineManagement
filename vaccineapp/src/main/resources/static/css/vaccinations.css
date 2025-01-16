@@ -1,65 +1,185 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 h1 {
+    color: #2c3e50;
     text-align: center;
-    margin: 20px 0;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* Filter section styles */
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .filter-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #495057;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-actions {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
     gap: 10px;
+    align-items: flex-end;
 }
 
-.filter-form label {
-    margin-right: 5px;
-}
-
-.filter-form select, .filter-form input {
-    padding: 5px;
-}
-
-.filter-form button {
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: white;
+/* Button styles */
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
     border: none;
     cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.filter-form button:hover {
-    background-color: #45a049;
+.btn-primary {
+    background-color: #007bff;
+    color: white;
 }
 
-.registration-table {
-    width: 90%;
-    margin: 0 auto;
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Table styles */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.vaccination-table {
+    width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.registration-table th, .registration-table td {
-    border: 1px solid #ddd;
+.vaccination-table th,
+.vaccination-table td {
+    padding: 12px 15px;
     text-align: left;
-    padding: 8px;
+    border-bottom: 1px solid #dee2e6;
 }
 
-.registration-table th {
-    background-color: #f2f2f2;
+.vaccination-table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
 }
 
-.registration-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.vaccination-table tbody tr:hover {
+    background-color: #f8f9fa;
 }
 
-.registration-table tr:hover {
-    background-color: #ddd;
+/* Status badge styles */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
-.registration-table td {
-    text-align: center;
+.status-badge.pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-badge.completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-badge.cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Action buttons container */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Alert styles */
+.alert {
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .vaccination-table {
+        font-size: 14px;
+    }
+
+    .vaccination-table th,
+    .vaccination-table td {
+        padding: 8px 10px;
+    }
 }
