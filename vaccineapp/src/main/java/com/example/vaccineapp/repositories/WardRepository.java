@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface WardRepository extends JpaRepository<Ward, Long> {
     List<Ward> findByDistrict(District district);
+    List<Ward> findAll();
 }

@@ -22,6 +22,16 @@ public class HomeController {
 	public String Home(Model model) {
 		return "home"; 
 	}
+
+	@GetMapping("/introduce")
+	public String introduce(Model model) {
+		return "introduce"; 
+	}
+	
+	@GetMapping("/vaccination-handbook")
+	public String vaccinationHandbook(Model model) {
+		return "vaccination-handbook"; 
+	}
 	
 	@GetMapping("/logout")
 	public String Logout(HttpServletRequest request, HttpServletResponse response) {

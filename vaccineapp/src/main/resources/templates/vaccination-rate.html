@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tỷ lệ tiêm chủng theo khu vực</title>
+    <link rel="stylesheet" href="/css/report-rate.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+    <h1>Tỷ lệ tiêm chủng theo khu vực</h1>
+	
+    <!-- Container for the chart -->
+    <div id="chart-container">
+        <canvas id="vaccinationChart" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Inline JavaScript -->
+    <script id="reportData" type="application/json" th:utext="${report}"></script>
+    <script>
+        // Lấy dữ liệu JSON từ thẻ reportData
+        try {
+            var reportData = JSON.parse(document.getElementById('reportData').textContent);
+            console.log("Dữ liệu báo cáo: ", reportData);
+            
+            if (reportData && reportData.length > 0) {
+                var chartData = {
+                    labels: reportData.map(item => item.regionName),
+                    datasets: [{
+                        label: 'Tỷ lệ tiêm chủng (%)',
+                        data: reportData.map(item => item.vaccinationRate),
+                        backgroundColor: [
+                            '#36a2eb', '#ff6384', '#ffcd56', 
+                            '#4bc0c0', '#9966ff', '#ff9f40',
+                            '#bdb76b', '#6a5acd', '#2e8b57',
+                            '#e91e63', '#9c27b0', '#2196f3',
+                            '#4caf50', '#ffc107', '#ff5722',
+                            '#607d8b', '#00bcd4', '#8bc34a',
+                            '#f44336', '#673ab7', '#3f51b5',
+                            '#009688', '#cddc39', '#795548',
+                            '#ffeb3b', '#00acc1', '#5e35b1',
+                            '#ff7043', '#7cb342', '#dce775',
+                            '#8e24aa', '#e57373', '#bcaaa4',
+                            '#64b5f6', '#81c784', '#ffb74d'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                };
+
+                var ctx = document.getElementById('vaccinationChart').getContext('2d');
+                var vaccinationChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('vaccinationChart').innerHTML = '<p>Không có dữ liệu để hiển thị.</p>';
+            }
+        } catch (e) {
+            console.error("Lỗi khi phân tích dữ liệu JSON: ", e);
+            document.getElementById('vaccinationChart').innerHTML = '<p>Lỗi khi xử lý dữ liệu.</p>';
+        }
+    </script>
+    <div th:replace="~{footer}"></div>
+</body>
+</html>

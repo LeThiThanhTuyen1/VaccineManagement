@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/* Đặt font chữ và căn chỉnh chung */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9;
+	margin: 0;
+	color: #333;
+}
+
+/* Tiêu đề chính */
+h1 {
+	margin-top: 20px;
+	text-align: center;
+	color: #0080ff;
+	margin-bottom: 20px;
+}
+
+/* Khung chứa biểu đồ */
+#chart-container {
+	width: 80%;
+	max-width: 600px;
+	margin: 0 auto;
+	background: white;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	padding: 20px;
+}
+
+/* Canvas biểu đồ */
+canvas {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Dữ liệu lỗi */
+#vaccinationChart p {
+	text-align: center;
+	font-size: 16px;
+	color: red;
+	margin-top: 20px;
+}

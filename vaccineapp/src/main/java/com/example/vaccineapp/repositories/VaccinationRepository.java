@@ -3,6 +3,7 @@ package com.example.vaccineapp.repositories;
 import com.example.vaccineapp.dto.VaccinationReportDTO;
 import com.example.vaccineapp.models.Vaccination;
 import com.example.vaccineapp.models.Vaccination.Status;
+import com.example.vaccineapp.models.Ward;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,4 +38,6 @@ public interface VaccinationRepository extends JpaRepository<Vaccination, Long> 
 	        @Param("vaccineName") String vaccineName,
 	        @Param("vaccinationDate") LocalDate vaccinationDate,
 	        @Param("status") Status status);
+	List<Vaccination> findByCitizen_Ward(Ward ward);
+	long countByCitizen_WardAndStatus(Ward ward, Vaccination.Status status);
 }

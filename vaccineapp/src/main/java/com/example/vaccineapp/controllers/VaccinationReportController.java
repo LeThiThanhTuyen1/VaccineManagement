@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.vaccineapp.dto.VaccinationReportDTO;
 import com.example.vaccineapp.services.VaccinationReportService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,4 +43,20 @@ public class VaccinationReportController {
         return "vaccination-report";
     }
    
+    @GetMapping("/vaccination-rate")
+    public String getVaccinationRateByRegion(Model model) {
+        List<VaccinationRateByRegionDTO> report = vaccinationReportService.getVaccinationRateByRegion();
+
+        // Convert list to JSON for front-end
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String jsonReport = objectMapper.writeValueAsString(report);
+            model.addAttribute("report", jsonReport);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return "vaccination-rate"; // View to render the chart
+    }
+
 }
