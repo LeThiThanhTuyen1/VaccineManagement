@@ -20,6 +20,12 @@ public class Citizen {
     @Column(name = "phone_number")
     private String phoneNumber;
     
+    @Column(name = "cccd")
+    private String cccd;
+    
+    @Column(name = "email")
+    private String email;
+    
     @ManyToOne
     @JoinColumn(name = "ward_id")
     private Ward ward;
@@ -47,6 +53,22 @@ public class Citizen {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getCccd() {
+		return cccd;
+	}
+
+	public void setCccd(String cccd) {
+		this.cccd = cccd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFullName() {

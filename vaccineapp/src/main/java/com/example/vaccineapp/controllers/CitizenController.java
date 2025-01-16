@@ -1,6 +1,7 @@
 package com.example.vaccineapp.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.vaccineapp.models.Citizen;
 import com.example.vaccineapp.models.Citizen.TargetGroup;
 import com.example.vaccineapp.models.Vaccination;
+import com.example.vaccineapp.models.Vaccine;
 import com.example.vaccineapp.services.CitizenService;
 import com.example.vaccineapp.services.VaccinationService;
 
@@ -59,7 +62,24 @@ public class CitizenController {
         model.addAttribute("group", group);
         model.addAttribute("citizens", citizens);
         model.addAttribute("targetGroups", TargetGroup.values());
-        return "citizen-management";
+        return "citizen/citizen-management";
+    }
+    
+    @GetMapping("/create")
+    public String showCreateUserPage(Model model) {
+    	model.addAttribute("targetGroups", TargetGroup.values());
+        return "citizen/add-citizen"; 
+    }
+    
+    @PostMapping("/create")
+    public String createCitizen(@ModelAttribute Citizen citizen, Model model) {
+    	Optional<Citizen> existingCitizen = citizenService.findCitizenByCccdD(citizen.getCccd());
+    	if (existingCitizen.isEmpty()) {
+    		model.addAttribute("error", "Số căn cước công dân đã tồn tại trong hệ thống!");
+            return "citizens/create";
+    	}
+    	citizenService.addCitizen(citizen);
+    	return "redirect:/citizens";
     }
     
     @GetMapping("/{citizenId}/vaccination-history")

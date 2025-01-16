@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Thêm công dân</title>
+<link rel="stylesheet" href="/css/add-manage.css" />
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+
+	<div class="container">
+		<h2>Thêm Công Dân Mới</h2>
+		<div th:if="${error}" style="color: red;">
+			<p th:text="${error}"></p>
+		</div>
+		<form th:action="@{/citizens/create}" method="post">
+			<div class="form-group">
+				<label for="username">Họ và tên:</label> <input
+					placeholder="Nhập họ và tên" type="text" id="fullName"
+					name="fullName" required />
+			</div>
+			<div class="form-group">
+				<label for="username">Số CCCD:</label> <input
+					placeholder="Nhập số căn cước công dân" type="text" id="cccd"
+					name="cccd" required />
+			</div>
+			<div class="form-group">
+				<label for="password">Ngày sinh:</label> <input
+					placeholder="Nhập ngày sinh" type="date" id="dateOfBirth"
+					name="dateOfBirth" required />
+			</div>
+			<div class="form-group">
+				<label for="password">Số điện thoại:</label> <input
+					placeholder="Nhập số điện thoại" type="text" id="phoneNumber"
+					name="phoneNumber" required />
+			</div>
+			<div class="form-group">
+				<label for="password">Địa chỉ cụ thể:</label> <input
+					placeholder="Nhập địa chỉ cụ thể" type="text" id="addressDetail"
+					name="addressDetail" required />
+			</div>
+			<div class="form-group">
+				<label for="group">Chọn nhóm đối tượng:</label> <select id="group"
+					name="group">
+					<option value="" th:selected="${group == null}"
+						th:text="'--- Chọn nhóm ---'"></option>
+					<option th:each="groupOption : ${targetGroups}"
+						th:value="${groupOption.name()}"
+						th:text="${groupOption.displayName}"
+						th:selected="${groupOption.name() == group}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn-save">Lưu tài khoản</button>
+				<a class="a-edit" th:href="@{/users/manage}">Hủy</a>
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="~{footer}"></div>
+</body>
+</html>

@@ -4,6 +4,22 @@ h1, h2 {
     color: #366d9f;
 }
 
+.btn.btn-primary {
+	margin-top: 10px;
+	max-width: 152px;
+	margin-left: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn.btn-primary:hover {
+    background-color: #218838;
+}
+
+
 form {
     margin-left: 20px;
     margin-bottom: 20px;
