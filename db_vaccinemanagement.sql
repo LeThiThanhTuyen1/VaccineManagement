@@ -45,23 +45,12 @@ CREATE TABLE vaccines (
     status  ENUM('IN_STOCK', 'EXPIRATION') DEFAULT 'IN_STOCK', -- trạng thái kho vắc xin
     description TEXT                   -- Mô tả chi tiết vắc xin
 );
-CREATE TABLE registrations (
+CREATE TABLE vaccinations (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     citizen_id BIGINT,                  -- Mã công dân
     vaccine_id BIGINT,                  -- Mã vắc xin
-    registration_date DATE,             -- Ngày đăng ký
     vaccination_date DATE,              -- Ngày dự kiến tiêm
-    location VARCHAR(255),              -- Địa điểm tiêm
     status ENUM('PENDING', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING', -- Trạng thái tiêm chủng
-    FOREIGN KEY (citizen_id) REFERENCES citizens(id),
-    FOREIGN KEY (vaccine_id) REFERENCES vaccines(id)
-);
-CREATE TABLE vaccination_history (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    citizen_id BIGINT,                  -- Mã công dân
-    vaccine_id BIGINT,                  -- Mã vắc xin
-    vaccination_date DATE,              -- Ngày đã tiêm
-    status ENUM('COMPLETED', 'MISSED') DEFAULT 'COMPLETED', -- Trạng thái tiêm
     FOREIGN KEY (citizen_id) REFERENCES citizens(id),
     FOREIGN KEY (vaccine_id) REFERENCES vaccines(id)
 );
@@ -102,10 +91,7 @@ VALUES
 ('Trần Thị B', '1990-08-15', '0987654321', 2, 'Số 54, Đường Nguyễn Trãi', 'ELDERLY'),
 ('Phạm Văn C', '2005-11-10', '0922334455', 3, 'Số 45/6/1 Đường Lê Lợi', 'CHILD');
 
-INSERT INTO registrations (citizen_id, vaccine_id, registration_date, vaccination_date, location, status) VALUES
-(1, 1, '2024-12-01', '2024-12-10', 'Trung tâm y tế Ba Đình', 'PENDING'),
-(2, 2, '2024-12-05', '2024-12-12', 'Trung tâm y tế Hoàn Kiếm', 'PENDING');
+INSERT INTO vaccinations (citizen_id, vaccine_id, vaccination_date, status) VALUES
+(1, 1, '2024-12-10', 'PENDING'),
+(2, 2, '2024-12-12', 'PENDING');
 
-INSERT INTO vaccination_history (citizen_id, vaccine_id, vaccination_date, status) VALUES
-(1, 1, '2024-12-10', 'COMPLETED'),
-(2, 2, '2024-12-12', 'COMPLETED');
