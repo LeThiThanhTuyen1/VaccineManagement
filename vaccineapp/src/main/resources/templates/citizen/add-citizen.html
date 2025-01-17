@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Thêm công dân</title>
+<link rel="stylesheet" href="/css/add-manage.css" />
+</head>
+<body>
+	<div th:replace="~{header}"></div>
+
+	<div class="container">
+		<h2>Thêm Công Dân Mới</h2>
+		<div th:if="${error}" style="color: red;">
+			<p th:text="${error}"></p>
+		</div>
+		<form th:action="@{/citizens/create}" method="post">
+			<div class="form-group">
+				<label for="fullName">Họ và tên:</label> <input
+					placeholder="Nhập họ và tên" type="text" id="fullName"
+					name="fullName" th:value="${citizen?.fullName}" required />
+			</div>
+			<div class="form-group">
+				<label for="cccd">Số CCCD:</label> <input
+					placeholder="Nhập số căn cước công dân" type="text" id="cccd"
+					name="cccd" th:value="${citizen?.cccd}" required />
+			</div>
+			<div class="form-group">
+				<label for="dateOfBirth">Ngày sinh:</label> <input
+					placeholder="Nhập ngày sinh" type="date" id="dateOfBirth"
+					name="dateOfBirth" th:value="${citizen?.dateOfBirth}" required />
+			</div>
+			<div class="form-group">
+				<label for="phoneNumber">Số điện thoại:</label> <input
+					placeholder="Nhập số điện thoại" type="text" id="phoneNumber"
+					name="phoneNumber" th:value="${citizen?.phoneNumber}" required />
+			</div>
+			<div class="form-group">
+				<label for="address">Địa chỉ</label>
+				<div id="provinceContainer">
+					<select id="wardSelect" >
+						<option value="">Chọn Xã</option>
+					</select>
+				</div>
+
+				<label id="margin10" for="addressDetail">Địa chỉ cụ thể:</label> <input
+					placeholder="Nhập địa chỉ cụ thể" type="text" id="addressDetail"
+					name="addressDetail" th:value="${citizen?.addressDetail}" required />
+			</div>
+			<div class="form-group">
+				<label for="targetGroup">Chọn nhóm đối tượng:</label> <select id="targetGroup"
+					name="targetGroup">
+					<option value="" th:selected="${group == null}"
+						th:text="'--- Chọn nhóm ---'"></option>
+					<option th:each="groupOption : ${targetGroups}"
+						th:value="${groupOption.name()}"
+						th:text="${groupOption.displayName}"
+						th:selected="${groupOption.name() == group}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn-save">Thêm</button>
+				<a class="a-edit" th:href="@{/citizens/management}">Quay lại</a>
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="~{footer}"></div>
+</body>
+</html>
+<script>
+//Tải danh sách tỉnh và chèn vào dropdown
+fetch('/locations/provinces')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('provinceContainer').innerHTML = data;
+
+        // Thêm thuộc tính name vào thẻ wardSelect sau khi đã tải xong
+        const wardSelect = document.getElementById('wardSelect');
+        wardSelect.setAttribute('name', 'ward');  // Cập nhật thuộc tính name
+        // Sau khi chèn xong dropdown tỉnh, thêm sự kiện onchange
+        const provinceSelect = document.getElementById('provinceSelect');
+        const districtSelect = document.getElementById('districtSelect');
+
+        provinceSelect.addEventListener('change', function () {
+            const provinceId = this.value;
+            if (provinceId) {
+                // Gọi API để lấy danh sách huyện theo tỉnh
+                fetch(`/locations/districts?provinceId=${provinceId}`)
+                    .then(response => response.json())
+                    .then(districts => {
+                        // Xóa danh sách huyện cũ
+                        districtSelect.innerHTML = '<option value="">Chọn Huyện</option>';
+                        wardSelect.innerHTML = '<option value="">Chọn Xã</option>'; // Reset xã
+                        
+                        // Thêm huyện mới vào dropdown
+                        districts.forEach(district => {
+                            const option = document.createElement('option');
+                            option.value = district.id;
+                            option.textContent = district.name;
+                            districtSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error loading districts:', error));
+            } else {
+                districtSelect.innerHTML = '<option value="">Chọn Huyện</option>';
+                wardSelect.innerHTML = '<option value="">Chọn Xã</option>';
+            }
+        });
+
+        // Thêm sự kiện onchange cho dropdown huyện
+        districtSelect.addEventListener('change', function () {
+            const districtId = this.value;
+            if (districtId) {
+                // Gọi API để lấy danh sách xã theo huyện
+                fetch(`/locations/wards?districtId=${districtId}`)
+                    .then(response => response.json())
+                    .then(wards => {
+                        // Xóa danh sách xã cũ
+                        wardSelect.innerHTML = '<option value="">Chọn Xã</option>';
+
+                        // Thêm xã mới vào dropdown
+                        wards.forEach(ward => {
+                            const option = document.createElement('option');
+                            option.value = ward.id;
+                            option.textContent = ward.name;
+                            wardSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error loading wards:', error));
+            } else {
+                wardSelect.innerHTML = '<option value="">Chọn Xã</option>';
+            }
+        });
+    })
+    .catch(error => console.error('Error loading provinces:', error));
+    function validateForm() {
+        let isValid = true;
+        let errorMessage = "";
+
+        // Lấy giá trị các trường
+        const fullName = document.getElementById('fullName').value;
+        const cccd = document.getElementById('cccd').value;
+        const dateOfBirth = document.getElementById('dateOfBirth').value;
+        const phoneNumber = document.getElementById('phoneNumber').value;
+        const addressDetail = document.getElementById('addressDetail').value;
+        const targetGroup = document.getElementById('targetGroup').value;
+
+        // Kiểm tra trường fullName (không có ký tự số)
+        if (!fullName || /\d/.test(fullName)) {
+            isValid = false;
+            errorMessage += "Họ và tên không được chứa ký tự số.\n";
+        }
+
+        // Kiểm tra trường cccd (từ 9 đến 12 ký tự, chỉ chứa số)
+        if (!cccd || !/^\d{9,12}$/.test(cccd)) {
+            isValid = false;
+            errorMessage += "Số CCCD phải là số và có ít nhất 9 ký tự và tối đa 12 ký tự.\n";
+        }
+
+        // Kiểm tra trường dateOfBirth (định dạng hợp lệ và nhỏ hơn ngày hiện tại)
+        const today = new Date();
+        const dob = new Date(dateOfBirth);
+        if (!dateOfBirth || dob >= today) {
+            isValid = false;
+            errorMessage += "Ngày sinh phải nhỏ hơn ngày hôm nay và có định dạng hợp lệ.\n";
+        }
+
+        if (!phoneNumber || !/^0\d{8,11}$/.test(phoneNumber)) {
+            isValid = false;
+            errorMessage += "Số điện thoại phải bắt đầu bằng số 0, là số, và có từ 9 đến 12 ký tự.\n";
+        }
+
+     // Lấy giá trị của các dropdown
+        const provinceSelect = document.getElementById('provinceSelect').value;
+        const districtSelect = document.getElementById('districtSelect').value;
+        const wardSelect = document.getElementById('wardSelect').value;
+     // Kiểm tra dropdown province (không để trống)
+        if (!provinceSelect || provinceSelect.trim() === "") {
+            isValid = false;
+            errorMessage += "Vui lòng chọn Tỉnh.\n";
+        }
+
+        // Kiểm tra dropdown district (không để trống)
+        if (!districtSelect || districtSelect.trim() === "") {
+            isValid = false;
+            errorMessage += "Vui lòng chọn Huyện.\n";
+        }
+
+        // Kiểm tra dropdown ward (không để trống)
+        if (!wardSelect || wardSelect.trim() === "") {
+            isValid = false;
+            errorMessage += "Vui lòng chọn Xã.\n";
+        }
+        // Kiểm tra trường addressDetail
+        if (!addressDetail) {
+            isValid = false;
+            errorMessage += "Địa chỉ cụ thể không được bỏ trống.\n";
+        }
+
+        if (!targetGroup || targetGroup.trim() === "") {
+            isValid = false; // Cập nhật trạng thái không hợp lệ
+            errorMessage += "Vui lòng chọn nhóm đối tượng.\n";
+        }
+        // Nếu có lỗi, hiển thị thông báo lỗi
+        if (!isValid) {
+            alert(errorMessage);
+        }
+
+        return isValid; // Trả về true nếu form hợp lệ
+    }
+
+    // Gắn sự kiện validate khi người dùng submit form
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Ngừng gửi form nếu có lỗi
+        }
+    });
+
+</script>

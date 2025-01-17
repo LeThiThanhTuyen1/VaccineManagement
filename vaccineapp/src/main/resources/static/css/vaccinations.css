@@ -18,3 +18,7 @@ h1 {
 .alert {
     margin-bottom: 20px;
 }
+
+.btn.btn-primary {
+	max-width: 170px;	
+}
