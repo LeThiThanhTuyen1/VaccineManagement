@@ -24,6 +24,15 @@ public class Ward {
     @JoinColumn(name = "district_id", nullable = false)
     private District district;
 
+	// Getter và Setter cho `id`
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 	public String getName() {
 		return name;
 	} 

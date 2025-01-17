@@ -32,6 +32,15 @@ button {
     cursor: pointer;
 }
 
+.btn.btn-primary, .btn.btn-warning {
+	background-color: green;
+	max-width: 135px;
+	margin-left: 20px;
+	border-radius: 25px;
+	padding: 5px 10px;
+	color: white;
+}
+
 .btn-warning {
 	background:  #ffff80;
 	color: black;

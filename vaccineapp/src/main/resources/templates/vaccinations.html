@@ -12,6 +12,7 @@
 <body>
 	<div th:replace="~{header}"></div>
     <h1>Danh sách lịch tiêm</h1>
+    <a th:href="@{/vaccinations/register}" class="btn btn-primary">Đăng ký tiêm chủng</a>
     <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
     <!-- Form lọc -->
     <form method="get" action="/vaccinations" class="row g-3 mb-4">
