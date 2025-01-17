@@ -168,6 +168,28 @@ function validateForm() {
         errorMessage += "Số điện thoại phải là số và có ít nhất 9 ký tự và tối đa 12 ký tự.\n";
     }
 
+ // Lấy giá trị của các dropdown
+    const provinceSelect = document.getElementById('provinceSelect').value;
+    const districtSelect = document.getElementById('districtSelect').value;
+    const wardSelect = document.getElementById('wardSelect').value;
+ // Kiểm tra dropdown province (không để trống)
+    if (!provinceSelect || provinceSelect.trim() === "") {
+        isValid = false;
+        errorMessage += "Vui lòng chọn Tỉnh.\n";
+    }
+
+    // Kiểm tra dropdown district (không để trống)
+    if (!districtSelect || districtSelect.trim() === "") {
+        isValid = false;
+        errorMessage += "Vui lòng chọn Huyện.\n";
+    }
+
+    // Kiểm tra dropdown ward (không để trống)
+    if (!wardSelect || wardSelect.trim() === "") {
+        isValid = false;
+        errorMessage += "Vui lòng chọn Xã.\n";
+    }
+    
     // Kiểm tra trường addressDetail
     if (!addressDetail) {
         isValid = false;
