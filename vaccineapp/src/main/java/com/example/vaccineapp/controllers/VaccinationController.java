@@ -98,19 +98,25 @@ public class VaccinationController {
         return "redirect:/vaccinations"; // Hoặc redirect đến trang khác sau khi thêm thành công
     }
 
-
     @PostMapping("/updateStatus")
-    public String updateVaccinationStatus(
-            @RequestParam Long vaccinationId,
-            @RequestParam String action,
-            RedirectAttributes redirectAttributes) {
+    public String updateStatus(@RequestParam("vaccinationId") Long vaccinationId, 
+                               @RequestParam("action") String action, 
+                               Model model) {
+        Vaccination vaccination = vaccinationService.getVaccinationById(vaccinationId);
+        LocalDate today = LocalDate.now();
+        List<Vaccination> vaccinations = vaccinationService.getAllVaccinations();
+        // Kiểm tra nếu ngày đăng ký tiêm lớn hơn ngày hiện tại
+        if (vaccination.getVaccinationDate().isAfter(today) && "COMPLETED".equals(action)) {
+            model.addAttribute("errorMessage", "Chưa đến ngày đăng ký. Không thể cập nhật trạng thái đã tiêm.");
+            model.addAttribute("vaccinations", vaccinations);
+            return "vaccinations";  // Trả về trang hiện tại cùng với thông báo lỗi
+        }
 
-        // Update status based on the action
-        Vaccination.Status newStatus = Vaccination.Status.valueOf(action.toUpperCase());
-        vaccinationService.updateVaccinationStatus(vaccinationId, newStatus);
-
-        redirectAttributes.addFlashAttribute("message", "Trạng thái đã được cập nhật thành công!");
-        // Redirect to the vaccination list page
-        return "redirect:/vaccinations";
+        // Thực hiện cập nhật trạng thái nếu hợp lệ
+        vaccinationService.updateVaccinationStatus(vaccinationId, action);
+        
+        // Thông báo thành công
+        model.addAttribute("message", "Trạng thái đã được cập nhật thành công.");
+        return "redirect:/vaccinations";  // Trả về danh sách lịch tiêm
     }
 }

@@ -58,11 +58,21 @@ public class VaccinationService {
         return vaccinationRepository.findByFilters(vaccineName, vaccinationDate, status);
     }
 
-    public void updateVaccinationStatus(Long vaccinationId, Vaccination.Status newStatus) {
-        Vaccination vaccination = vaccinationRepository.findById(vaccinationId)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy lịch tiêm với ID: " + vaccinationId));
-        vaccination.setStatus(newStatus);
-        vaccinationRepository.save(vaccination);
+    public void updateVaccinationStatus(Long vaccinationId, String action) {
+        Vaccination vaccination = getVaccinationById(vaccinationId);
+        if (vaccination != null) {
+            switch (action) {
+                case "COMPLETED":
+                    vaccination.setStatus(Vaccination.Status.COMPLETED);
+                    break;
+                case "CANCELLED":
+                    vaccination.setStatus(Vaccination.Status.CANCELLED);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid action");
+            }
+            vaccinationRepository.save(vaccination);  // Lưu thay đổi vào cơ sở dữ liệu
+        }
     }
     
     public void registerVaccination(Long citizenId, Long vaccineId, LocalDate vaccinationDate) {
